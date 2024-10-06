@@ -1,31 +1,31 @@
-import Calc from "../../../utils/calc";
+import Calc from '../../../utils/calc';
 
 const title = {
-  text: "",
-  align: "center",
+  text: '',
+  align: 'center',
   margin: 1,
   offsetX: 0,
   offsetY: 0,
   floating: false,
   style: {
-    fontSize: "14px",
-    fontWeight: "bold",
+    fontSize: '14px',
+    fontWeight: 'bold',
     fontFamily: undefined,
-    color: "#fff",
+    color: '#fff',
   },
 };
 
 const chart = {
-  type: "donut",
-  height: "300px",
+  type: 'donut',
+  height: '300px',
   animations: {
     enabled: false,
   },
-  background: "#303030",
+  background: '#303030',
 };
 
 const theme = {
-  mode: "dark",
+  mode: 'dark',
 };
 
 const plotOptions = {
@@ -43,7 +43,7 @@ const stroke = {
 };
 
 const noData = {
-  text: "Loading...",
+  text: 'Loading...',
 };
 
 const legend = {
@@ -51,11 +51,11 @@ const legend = {
   showForSingleSeries: false,
   showForNullSeries: true,
   showForZeroSeries: true,
-  position: "bottom",
-  horizontalAlign: "center",
+  position: 'bottom',
+  horizontalAlign: 'center',
   floating: false,
-  fontSize: "11px",
-  fontFamily: "Helvetica, Arial",
+  fontSize: '11px',
+  fontFamily: 'Helvetica, Arial',
   fontWeight: 400,
   formatter: undefined,
   inverseOrder: false,
@@ -72,7 +72,7 @@ const legend = {
     width: 9,
     height: 9,
     strokeWidth: 0,
-    strokeColor: "#fff",
+    strokeColor: '#fff',
     fillColors: undefined,
     radius: 1,
     customHTML: undefined,
@@ -107,8 +107,8 @@ const memoryChartOptions = {
   },
   noData: noData,
   series: [],
-  labels: ["Other", "OctoFarm", "Free"],
-  colors: ["#f39c12", "#3498db", "#00bc8c"],
+  labels: ['Other', 'OctoFarm', 'Free'],
+  colors: ['#f39c12', '#3498db', '#00bc8c'],
   legend: legend,
 };
 const cpuChartOptions = {
@@ -126,8 +126,8 @@ const cpuChartOptions = {
   },
   noData: noData,
   series: [],
-  labels: ["System", "OctoFarm", "User", "Free"],
-  colors: ["#f39c12", "#3498db", "#375a7f", "#00bc8c"],
+  labels: ['System', 'OctoFarm', 'User', 'Free'],
+  colors: ['#f39c12', '#3498db', '#375a7f', '#00bc8c'],
   legend: legend,
 };
 

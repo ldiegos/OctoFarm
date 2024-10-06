@@ -20,7 +20,7 @@ import {
   tooltipDataPointFormatter,
   valueToLocaleDateStringFormatter,
   valueToLocaleTimeStringFormatter,
-} from "./chart.utils";
+} from './chart.utils';
 import {
   defaultEnvironmentalYAxisAnnotations,
   defaultHeatmapColorScaleOptions,
@@ -34,13 +34,13 @@ import {
   utilisationConnectionColors,
   utilisationConnectionLabels,
   xAxisConnectionCategories,
-} from "./chart.options";
-import UI from "../../utils/ui";
+} from './chart.options';
+import UI from '../../utils/ui';
 
 const optionsHourlyTemperature = {
   chart: {
-    type: "line",
-    id: "realtime",
+    type: 'line',
+    id: 'realtime',
     ...defaultChartDimensions(),
     ...enableAnimations(false),
     ...showToolbar(false),
@@ -49,16 +49,16 @@ const optionsHourlyTemperature = {
   },
   colors: farmTempColors,
   stroke: {
-    curve: "smooth",
+    curve: 'smooth',
     width: 2,
   },
   ...showToolbar(false),
   ...theme(),
   ...loadingText(),
   series: [],
-  yaxis: [getToolTempSeries("Temp"), ...getHiddenToolTempRepeated(5)],
+  yaxis: [getToolTempSeries('Temp'), ...getHiddenToolTempRepeated(5)],
   xaxis: {
-    type: "datetime",
+    type: 'datetime',
     labels: {
       formatter: valueToLocaleTimeStringFormatter,
     },
@@ -66,12 +66,12 @@ const optionsHourlyTemperature = {
 };
 const optionsWeeklyUtilisationPerDayHeatMap = {
   chart: {
-    type: "heatmap",
-    id: "realtime",
+    type: 'heatmap',
+    id: 'realtime',
     ...defaultChartDimensions(),
     animations: {
       enabled: true,
-      easing: "linear",
+      easing: 'linear',
       dynamicAnimation: {
         speed: 1000,
       },
@@ -87,16 +87,16 @@ const optionsWeeklyUtilisationPerDayHeatMap = {
     enabled: true,
     formatter: clippedPercentageFormatter,
     style: {
-      fontSize: "14px",
-      fontFamily: "Helvetica, Arial, sans-serif",
-      fontWeight: "bold",
-      colors: ["#000000"],
+      fontSize: '14px',
+      fontFamily: 'Helvetica, Arial, sans-serif',
+      fontWeight: 'bold',
+      colors: ['#000000'],
     },
   },
   stroke: {
     show: true,
-    curve: "smooth",
-    lineCap: "butt",
+    curve: 'smooth',
+    lineCap: 'butt',
     colors: [defaultDarkColor()],
     width: 2,
     dashArray: 0,
@@ -124,9 +124,9 @@ const optionsWeeklyUtilisationPerDayHeatMap = {
 const currentStatusChartOptions = {
   series: [],
   chart: {
-    type: "bar",
+    type: 'bar',
     ...defaultChartWidth(),
-    height: "85%",
+    height: '85%',
     ...showToolbar(false),
     ...enableAnimations(false),
     ...defaultBackground(),
@@ -160,7 +160,7 @@ const currentStatusChartOptions = {
 
 const optionsUtilisation = {
   chart: {
-    type: "donut",
+    type: 'donut',
     ...fullChartDimensions(),
     ...enableAnimations(true),
     background: defaultBackground(),
@@ -193,11 +193,11 @@ const optionsUtilisation = {
     showForSingleSeries: false,
     showForNullSeries: true,
     showForZeroSeries: true,
-    position: "bottom",
-    horizontalAlign: "center",
+    position: 'bottom',
+    horizontalAlign: 'center',
     floating: false,
-    fontSize: "11px",
-    fontFamily: "Helvetica, Arial",
+    fontSize: '11px',
+    fontFamily: 'Helvetica, Arial',
     fontWeight: 400,
     formatter: undefined,
     inverseOrder: false,
@@ -214,7 +214,7 @@ const optionsUtilisation = {
       width: 9,
       height: 9,
       strokeWidth: 0,
-      strokeColor: "#fff",
+      strokeColor: '#fff',
       fillColors: undefined,
       radius: 1,
       customHTML: undefined,
@@ -237,9 +237,9 @@ const optionsUtilisation = {
 
 const filamentUsageOverTimeChartOptions = {
   chart: {
-    type: "line",
+    type: 'line',
     ...defaultChartWidth(),
-    height: "250px",
+    height: '250px',
     stacked: true,
     ...enableAnimations(true),
     ...showToolbar(false),
@@ -254,7 +254,7 @@ const filamentUsageOverTimeChartOptions = {
   colors: rainBow(),
   stroke: {
     width: 2,
-    curve: "smooth",
+    curve: 'smooth',
   },
   ...showToolbar(false),
   ...theme(),
@@ -264,7 +264,7 @@ const filamentUsageOverTimeChartOptions = {
   yaxis: [
     {
       title: {
-        text: "Weight",
+        text: 'Weight',
       },
       labels: {
         formatter: toFixedWeightGramFormatter,
@@ -272,7 +272,7 @@ const filamentUsageOverTimeChartOptions = {
     },
   ],
   xaxis: {
-    type: "datetime",
+    type: 'datetime',
     labels: {
       formatter: valueToLocaleDateStringFormatter,
     },
@@ -280,9 +280,9 @@ const filamentUsageOverTimeChartOptions = {
 };
 const printCompletionByDayChartOptions = {
   chart: {
-    type: "line",
+    type: 'line',
     ...defaultChartWidth(),
-    height: "250px",
+    height: '250px',
     ...enableAnimations(true),
     ...showToolbar(false),
     ...noZoom(),
@@ -295,19 +295,15 @@ const printCompletionByDayChartOptions = {
   },
   stroke: {
     width: 4,
-    curve: "smooth",
+    curve: 'smooth',
   },
   ...showToolbar(false),
   ...theme(),
   ...loadingText(),
   series: [],
-  yaxis: [
-    succesCountSeries(true),
-    succesCountSeries(false),
-    succesCountSeries(false),
-  ],
+  yaxis: [succesCountSeries(true), succesCountSeries(false), succesCountSeries(false)],
   xaxis: {
-    type: "category",
+    type: 'category',
     labels: {
       formatter: valueToLocaleDateStringFormatter,
     },
@@ -315,11 +311,11 @@ const printCompletionByDayChartOptions = {
 };
 const printSuccessRatePerDay = {
   chart: {
-    type: "bar",
+    type: 'bar',
     stacked: true,
-    stackType: "100%",
+    stackType: '100%',
     ...defaultChartWidth(),
-    height: "250px",
+    height: '250px',
     ...enableAnimations(true),
     ...showToolbar(false),
     ...noZoom(),
@@ -332,19 +328,15 @@ const printSuccessRatePerDay = {
   },
   stroke: {
     width: 4,
-    curve: "smooth",
+    curve: 'smooth',
   },
   ...showToolbar(false),
   ...theme(),
   ...loadingText(),
   series: [],
-  yaxis: [
-    successRateSeries(true),
-    successRateSeries(false),
-    successRateSeries(false),
-  ],
+  yaxis: [successRateSeries(true), successRateSeries(false), successRateSeries(false)],
   xaxis: {
-    type: "category",
+    type: 'category',
     labels: {
       formatter: valueToLocaleDateStringFormatter,
     },
@@ -353,14 +345,14 @@ const printSuccessRatePerDay = {
 
 const filamentUsageByDayChartOptions = {
   chart: {
-    type: "bar",
+    type: 'bar',
     ...defaultChartWidth(),
-    height: "250px",
+    height: '250px',
     stacked: true,
     stroke: {
       show: true,
-      curve: "smooth",
-      lineCap: "butt",
+      curve: 'smooth',
+      lineCap: 'butt',
       width: 1,
       dashArray: 0,
     },
@@ -383,7 +375,7 @@ const filamentUsageByDayChartOptions = {
   yaxis: [
     {
       title: {
-        text: "Weight",
+        text: 'Weight',
       },
       labels: {
         formatter: toFixedWeightGramFormatter,
@@ -391,7 +383,7 @@ const filamentUsageByDayChartOptions = {
     },
   ],
   xaxis: {
-    type: "category",
+    type: 'category',
     labels: {
       formatter: valueToLocaleDateStringFormatter,
     },
@@ -400,8 +392,8 @@ const filamentUsageByDayChartOptions = {
 
 const environmentalDataChartOptions = {
   chart: {
-    type: "line",
-    id: "realtime",
+    type: 'line',
+    id: 'realtime',
     ...defaultChartDimensions(),
     ...enableAnimations(false),
     ...showToolbar(false),
@@ -410,7 +402,7 @@ const environmentalDataChartOptions = {
   },
   colors: environmentalDataColors,
   stroke: {
-    curve: "smooth",
+    curve: 'smooth',
   },
   ...showToolbar(false),
   ...theme(),
@@ -419,13 +411,13 @@ const environmentalDataChartOptions = {
   // set dynamically by code
   // yaxis: availableStats,
   xaxis: {
-    type: "datetime",
+    type: 'datetime',
     labels: {
       formatter: valueToLocaleTimeStringFormatter,
     },
   },
   annotations: {
-    position: "front",
+    position: 'front',
     yaxis: defaultEnvironmentalYAxisAnnotations,
   },
 };
@@ -437,8 +429,8 @@ const historySparkLineOptions = {
     },
   ],
   chart: {
-    type: "line",
-    width: "100%",
+    type: 'line',
+    width: '100%',
     height: 85,
     sparkline: {
       enabled: true,
@@ -446,30 +438,30 @@ const historySparkLineOptions = {
     zoom: {
       enabled: false,
     },
-    background: "#303030",
+    background: '#303030',
   },
 
   theme: {
-    mode: "dark",
+    mode: 'dark',
   },
   noData: {
-    text: "No Data to Display",
+    text: 'No Data to Display',
   },
-  colors: ["#3498db"],
+  colors: ['#3498db'],
   tooltip: {
     fixed: {
       enabled: false,
     },
     x: {
       show: true,
-      formatter: "",
+      formatter: '',
     },
     y: {
       formatter: function (value) {
         return UI.generateTime(value);
       },
       title: {
-        formatter: () => "",
+        formatter: () => '',
       },
     },
     marker: {

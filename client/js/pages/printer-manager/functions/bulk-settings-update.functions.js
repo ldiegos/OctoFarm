@@ -1,14 +1,14 @@
-import UI from "../../../utils/ui";
+import UI from '../../../utils/ui';
 
 const formTemplate = (keyName, obj) => {
-  let buttonsHTML = "";
-  let checkBoxHTML = "";
+  let buttonsHTML = '';
+  let checkBoxHTML = '';
   for (const [key, value] of Object.entries(obj)) {
     switch (key) {
-      case "plugins":
+      case 'plugins':
         break;
       default:
-        if (typeof value === "boolean") {
+        if (typeof value === 'boolean') {
           checkBoxHTML += UI.convertValueToTemplate(key, value);
         } else {
           buttonsHTML += UI.convertValueToTemplate(key, value);
@@ -32,19 +32,14 @@ export function populateBulkSettingsForms(settings) {
   for (const key of Object.keys(settings)) {
     const appearanceElement = document.getElementById(`bulk-${key}-el`);
     switch (key) {
-      case "scripts":
-        appearanceElement.innerHTML = formTemplate(
-          `${key}`,
-          settings[key].gcode
-        );
+      case 'scripts':
+        appearanceElement.innerHTML = formTemplate(`${key}`, settings[key].gcode);
         break;
-      case "terminalFilters":
+      case 'terminalFilters':
         break;
       default:
         appearanceElement.innerHTML = formTemplate(`${key}`, settings[key]);
     }
-    UI.removeLoaderFromElementInnerHTML(
-      document.getElementById(`bulk-${key}-settings-btn`)
-    );
+    UI.removeLoaderFromElementInnerHTML(document.getElementById(`bulk-${key}-settings-btn`));
   }
 }

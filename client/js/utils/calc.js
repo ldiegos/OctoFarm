@@ -19,7 +19,7 @@ export default class Calculate {
   static generateTime(seconds) {
     let string;
     if (seconds === undefined || isNaN(seconds) || seconds === null) {
-      string = "No Time Estimate";
+      string = 'No Time Estimate';
     } else {
       let days = Math.floor(seconds / (3600 * 24));
 
@@ -35,22 +35,22 @@ export default class Calculate {
       string = `${days}d, ${hrs}h, ${mnts}m, ${seconds}s`;
 
       if (mnts === 0) {
-        if (string.includes("0m")) {
-          string = string.replace(" 0m,", "");
+        if (string.includes('0m')) {
+          string = string.replace(' 0m,', '');
         }
       }
       if (hrs === 0) {
-        if (string.includes("0h")) {
-          string = string.replace(" 0h,", "");
+        if (string.includes('0h')) {
+          string = string.replace(' 0h,', '');
         }
       }
       if (days === 0) {
-        if (string.includes("0d")) {
-          string = string.replace("0d,", "");
+        if (string.includes('0d')) {
+          string = string.replace('0d,', '');
         }
       }
       if (mnts === 0 && hrs === 0 && days === 0 && seconds === 0) {
-        string = string.replace("0s", "Done");
+        string = string.replace('0s', 'Done');
       }
     }
 
@@ -64,16 +64,14 @@ export default class Calculate {
 
   static bytes(a, b) {
     if (a === undefined || isNaN(a) || a === null) {
-      return "";
+      return '';
     }
-    if (a === 0) return "0 Bytes";
+    if (a === 0) return '0 Bytes';
     const c = 1024;
     const d = b || 2;
-    const e = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    const e = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
     const f = Math.floor(Math.log(a) / Math.log(c));
-    return `<i class=\"fas fa-hdd\"></i> ${parseFloat(
-      (a / Math.pow(c, f)).toFixed(d)
-    )} ${e[f]}`;
+    return `<i class=\"fas fa-hdd\"></i> ${parseFloat((a / Math.pow(c, f)).toFixed(d))} ${e[f]}`;
   }
 
   static dateClean(date) {

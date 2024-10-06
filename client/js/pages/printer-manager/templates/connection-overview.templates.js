@@ -1,4 +1,4 @@
-import UI from "../../../utils/ui";
+import UI from '../../../utils/ui';
 
 export const collapsableRow = (
   index,
@@ -30,7 +30,7 @@ export const collapsableRow = (
        </div>
      </th>
      <th> ${totalsArray[index].reduce(function (a, b) {
-       return a + b["retryCount"];
+       return a + b['retryCount'];
      }, 0)} </th>
      <th>
        ${totalAPIFailed}
@@ -67,9 +67,7 @@ export const collapsableContent = (
        </th>
        <th class="p-1">${log.totalRetries}</th>
        <th class="p-1">${log.connectionFailures}</th>
-       <th class="p-1">${
-         url.includes("websocket") ? log.totalPingPong : "-"
-       }</th>
+       <th class="p-1">${url.includes('websocket') ? log.totalPingPong : '-'}</th>
     </tr>
     
     `;

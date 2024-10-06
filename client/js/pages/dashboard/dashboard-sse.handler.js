@@ -1,14 +1,14 @@
-import { DashUpdate } from "./dashboard.updater";
-import UI from "../../utils/ui";
+import { DashUpdate } from './dashboard.updater';
+import UI from '../../utils/ui';
 
-export const workerURL = "/dashboardInfo/get/";
+export const workerURL = '/dashboardInfo/get/';
 
 //REFACTOR move over the proper SSE Handler... no need for it to have it's own.
 export async function dashboardSSEventHandler(data) {
   if (data) {
     const dashboard = data.dashStatistics;
     const dashboardSettings = data.dashboardSettings;
-    const cameraList = data.cameraList
+    const cameraList = data.cameraList;
 
     DashUpdate.farmInformation(
       dashboard.timeEstimates,
@@ -47,15 +47,15 @@ export async function dashboardSSEventHandler(data) {
     if (dashboardSettings.other.timeAndDate) {
       DashUpdate.dateAndTime();
     }
-    if(dashboardSettings.other.cameraCarousel){
+    if (dashboardSettings.other.cameraCarousel) {
       DashUpdate.cameraCarousel(cameraList);
     }
   } else {
     UI.createAlert(
-      "warning",
-      "Server Events closed unexpectedly... Retying in 10 seconds",
+      'warning',
+      'Server Events closed unexpectedly... Retying in 10 seconds',
       10000,
-      "Clicked"
+      'Clicked'
     );
   }
 }

@@ -7,7 +7,7 @@ export function checkTemps(element, actual, target, tempTriggers, state) {
   if (isNaN(target)) {
     target = 0;
   }
-  if (state === "Complete") {
+  if (state === 'Complete') {
     if (actual > parseFloat(tempTriggers.coolDown)) {
       const string = `<i class="far fa-circle"></i>&nbsp;${actual}°C&nbsp;<i class="fas fa-bullseye"></i>&nbsp;${target}°C`;
       if (element && element.innerHTML !== string) {
@@ -19,7 +19,7 @@ export function checkTemps(element, actual, target, tempTriggers, state) {
         element.innerHTML = string;
       }
     }
-  } else if (state === "Active") {
+  } else if (state === 'Active') {
     if (
       actual > target - parseFloat(tempTriggers.heatingVariation) &&
       actual < target + parseFloat(tempTriggers.heatingVariation)

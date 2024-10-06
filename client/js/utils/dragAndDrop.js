@@ -1,8 +1,8 @@
-import FileManagerService from "../services/file-manager.service.js";
-import UI from "./ui.js";
-import Validate from "./validate.js";
-import { groupBy, mapValues } from "lodash";
-import { printerIsOnline } from "./octofarm.utils";
+import FileManagerService from '../services/file-manager.service.js';
+import UI from './ui.js';
+import Validate from './validate.js';
+import { groupBy, mapValues } from 'lodash';
+import { printerIsOnline } from './octofarm.utils';
 
 let activeFile = false;
 
@@ -13,13 +13,13 @@ export function dragCheck() {
 export function dragAndDropEnable(element, printer) {
   const dropArea = document.getElementById(element.id);
   // Prevent default drag behaviors
-  ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
     dropArea.addEventListener(eventName, preventDefaults, false);
     document.body.addEventListener(eventName, preventDefaults, false);
   });
 
   // Highlight drop area when item is dragged over it
-  ["dragenter", "dragover"].forEach((eventName) => {
+  ['dragenter', 'dragover'].forEach((eventName) => {
     dropArea.addEventListener(
       eventName,
       (event) => {
@@ -29,7 +29,7 @@ export function dragAndDropEnable(element, printer) {
       false
     );
   });
-  ["dragleave", "drop"].forEach((eventName) => {
+  ['dragleave', 'drop'].forEach((eventName) => {
     dropArea.addEventListener(
       eventName,
       (event) => {
@@ -40,7 +40,7 @@ export function dragAndDropEnable(element, printer) {
     );
   });
   dropArea.addEventListener(
-    "drop",
+    'drop',
     (event) => {
       handleDrop(event, printer);
     },
@@ -51,13 +51,13 @@ export function dragAndDropEnable(element, printer) {
 export function dragAndDropEnableMultiplePrinters(element, printers) {
   const dropArea = document.getElementById(element.id);
   // Prevent default drag behaviors
-  ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
     dropArea.addEventListener(eventName, preventDefaults, false);
     document.body.addEventListener(eventName, preventDefaults, false);
   });
 
   // Highlight drop area when item is dragged over it
-  ["dragenter", "dragover"].forEach((eventName) => {
+  ['dragenter', 'dragover'].forEach((eventName) => {
     dropArea.addEventListener(
       eventName,
       (event) => {
@@ -67,7 +67,7 @@ export function dragAndDropEnableMultiplePrinters(element, printers) {
       false
     );
   });
-  ["dragleave", "drop"].forEach((eventName) => {
+  ['dragleave', 'drop'].forEach((eventName) => {
     dropArea.addEventListener(
       eventName,
       (event) => {
@@ -78,7 +78,7 @@ export function dragAndDropEnableMultiplePrinters(element, printers) {
     );
   });
   dropArea.addEventListener(
-    "drop",
+    'drop',
     (event) => {
       const selectedOnlyPrinters = printers.filter((p) => !!p.isSelected);
       handleMassDrop(event, selectedOnlyPrinters);
@@ -88,23 +88,21 @@ export function dragAndDropEnableMultiplePrinters(element, printers) {
 }
 
 export function dragAndDropGroupEnable(printers) {
-  const groupedPrinters = mapValues(groupBy(printers, "group"));
+  const groupedPrinters = mapValues(groupBy(printers, 'group'));
   for (const key in groupedPrinters) {
     if (groupedPrinters.hasOwnProperty(key)) {
-      if (key !== "") {
+      if (key !== '') {
         const currentGroupEncoded = encodeURIComponent(key);
-        const dropArea = document.getElementById(
-          `dropPanel-${currentGroupEncoded}`
-        );
+        const dropArea = document.getElementById(`dropPanel-${currentGroupEncoded}`);
 
         // Prevent default drag behaviors
-        ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
           dropArea.addEventListener(eventName, preventDefaults, false);
           document.body.addEventListener(eventName, preventDefaults, false);
         });
 
         // Highlight drop area when item is dragged over it
-        ["dragenter", "dragover"].forEach((eventName) => {
+        ['dragenter', 'dragover'].forEach((eventName) => {
           dropArea.addEventListener(
             eventName,
             (event) => {
@@ -114,7 +112,7 @@ export function dragAndDropGroupEnable(printers) {
             false
           );
         });
-        ["dragleave", "drop"].forEach((eventName) => {
+        ['dragleave', 'drop'].forEach((eventName) => {
           dropArea.addEventListener(
             eventName,
             (event) => {
@@ -125,7 +123,7 @@ export function dragAndDropGroupEnable(printers) {
           );
         });
         dropArea.addEventListener(
-          "drop",
+          'drop',
           (event) => {
             handleMassDrop(event, groupedPrinters[key]);
           },
@@ -142,11 +140,11 @@ function preventDefaults(e) {
 }
 
 function highlight(_e, currentElement) {
-  currentElement.classList.add("highlight");
+  currentElement.classList.add('highlight');
 }
 
 function unhighlight(_e, currentElement) {
-  currentElement.classList.remove("highlight");
+  currentElement.classList.remove('highlight');
 }
 
 function handleDrop(e, currentPrinter) {
@@ -161,22 +159,12 @@ function handleMassDrop(e, printers) {
   handleFiles(files, printers);
 }
 
-function sendFilesToPrinter(
-  singleFileOnly,
-  printAfterUpload,
-  uploadableFiles,
-  printer
-) {
-  UI.createAlert(
-    "warning",
-    `${Validate.getName(printer)}: started upload`,
-    3000,
-    "Clicked"
-  );
+function sendFilesToPrinter(singleFileOnly, printAfterUpload, uploadableFiles, printer) {
+  UI.createAlert('warning', `${Validate.getName(printer)}: started upload`, 3000, 'Clicked');
 
   // Only single files can be sent to be printed immediately after upload
   if (printAfterUpload && singleFileOnly) {
-    FileManagerService.handleFiles(uploadableFiles, printer, "print");
+    FileManagerService.handleFiles(uploadableFiles, printer, 'print');
   } else {
     FileManagerService.handleFiles(uploadableFiles, printer);
   }
@@ -187,26 +175,30 @@ export function handleFiles(uploadableFiles, printerArray) {
     return;
   }
 
-  for(const printer of printerArray){
-    if(!printerIsOnline(printer)){
-      UI.createAlert("warning", "Your printer is not idle... this action has been aborted!", 3000, "Clicked");
+  for (const printer of printerArray) {
+    if (!printerIsOnline(printer)) {
+      UI.createAlert(
+        'warning',
+        'Your printer is not idle... this action has been aborted!',
+        3000,
+        'Clicked'
+      );
       return;
     }
   }
 
-
   const singleFileOnly = uploadableFiles.length === 1;
   if (singleFileOnly) {
     bootbox.confirm({
-      message: "Would you like to print upon upload?",
+      message: 'Would you like to print upon upload?',
       buttons: {
         confirm: {
-          label: "Yes",
-          className: "btn-success",
+          label: 'Yes',
+          className: 'btn-success',
         },
         cancel: {
-          label: "No",
-          className: "btn-danger",
+          label: 'No',
+          className: 'btn-danger',
         },
       },
       callback(bootBoxConfirmed) {
@@ -221,5 +213,3 @@ export function handleFiles(uploadableFiles, printerArray) {
     });
   }
 }
-
-

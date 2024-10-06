@@ -32,17 +32,17 @@ export function timeDifference(current, previous) {
   const elapsed = current - previous;
 
   if (elapsed < msPerMinute) {
-    return Math.round(elapsed / 1000) + " sec. ago";
+    return Math.round(elapsed / 1000) + ' sec. ago';
   } else if (elapsed < msPerHour) {
-    return Math.round(elapsed / msPerMinute) + " min. ago";
+    return Math.round(elapsed / msPerMinute) + ' min. ago';
   } else if (elapsed < msPerDay) {
-    return Math.round(elapsed / msPerHour) + " hours ago";
+    return Math.round(elapsed / msPerHour) + ' hours ago';
   } else if (elapsed < msPerMonth) {
-    return Math.round(elapsed / msPerDay) + " days ago";
+    return Math.round(elapsed / msPerDay) + ' days ago';
   } else if (elapsed < msPerYear) {
-    return Math.round(elapsed / msPerMonth) + " months ago";
+    return Math.round(elapsed / msPerMonth) + ' months ago';
   } else {
-    return Math.round(elapsed / msPerYear) + " years ago";
+    return Math.round(elapsed / msPerYear) + ' years ago';
   }
 }
 
@@ -53,15 +53,15 @@ export function secondsToTime(time) {
   let seconds = sec_num - hours * 3600 - minutes * 60;
 
   if (hours < 10) {
-    hours = "0" + hours;
+    hours = '0' + hours;
   }
   if (minutes < 10) {
-    minutes = "0" + minutes;
+    minutes = '0' + minutes;
   }
   if (seconds < 10) {
-    seconds = "0" + seconds?.toFixed(0);
+    seconds = '0' + seconds?.toFixed(0);
   } else {
     seconds = seconds?.toFixed(0);
   }
-  return hours + ":" + minutes + ":" + seconds;
+  return hours + ':' + minutes + ':' + seconds;
 }

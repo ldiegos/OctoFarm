@@ -1,12 +1,12 @@
-import UI from "../../utils/ui";
-import OctoFarmClient from "../../services/octofarm-client.service";
-import FileManagerSortingService from "../../services/file-manager-sorting.service";
+import UI from '../../utils/ui';
+import OctoFarmClient from '../../services/octofarm-client.service';
+import FileManagerSortingService from '../../services/file-manager-sorting.service';
 
 export const generatePathList = (folderList) => {
   const options = [];
   const loc = {
-    text: "local",
-    value: "/",
+    text: 'local',
+    value: '/',
   };
   options.push(loc);
   folderList.forEach((folder) => {

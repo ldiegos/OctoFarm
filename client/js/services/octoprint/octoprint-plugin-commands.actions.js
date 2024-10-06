@@ -1,10 +1,10 @@
-import OctoPrintClient from "./octoprint-client.service.js";
-import OctoFarmClient from "../octofarm-client.service.js";
-import UI from "../../utils/ui";
-import bulkActionsStates from "../../pages/printer-manager/bulk-actions.constants";
+import OctoPrintClient from './octoprint-client.service.js';
+import OctoFarmClient from '../octofarm-client.service.js';
+import UI from '../../utils/ui';
+import bulkActionsStates from '../../pages/printer-manager/bulk-actions.constants';
 
-const printerBase = "printers";
-const printerInfoURL = "/printerInfo";
+const printerBase = 'printers';
+const printerInfoURL = '/printerInfo';
 
 async function updateBtnOnClick(printerID) {
   let data = {
@@ -18,7 +18,7 @@ async function updateBtnOnClick(printerID) {
   const displayNameList = [];
   if (printer.octoPrintPluginUpdates.length > 0) {
     printer.octoPrintPluginUpdates.forEach((plugin) => {
-      const n = plugin.releaseNotesURL.lastIndexOf("/");
+      const n = plugin.releaseNotesURL.lastIndexOf('/');
       const version = plugin.releaseNotesURL.substring(n + 1);
       pluginsToUpdate.push({
         text: `${plugin.displayName} - Updating to ${version}`,
@@ -29,50 +29,41 @@ async function updateBtnOnClick(printerID) {
     });
     bootbox.prompt({
       title: "Select the plugins you'd like to update below...",
-      inputType: "select",
+      inputType: 'select',
       multiple: true,
       value: autoSelect,
       inputOptions: pluginsToUpdate,
       callback: async function (result) {
         if (result && result.length > 0) {
-          const pluginUpdate = await updateOctoPrintPlugins(
-            result,
-            printer,
-            displayNameList
-          );
+          const pluginUpdate = await updateOctoPrintPlugins(result, printer, displayNameList);
           if (pluginUpdate.status === bulkActionsStates.SUCCESS) {
             UI.createAlert(
-              "success",
-              "Updates successfully fired! Please check results in Connection Log.",
+              'success',
+              'Updates successfully fired! Please check results in Connection Log.',
               3000,
-              "Clicked"
+              'Clicked'
             );
             UI.createAlert(
-              "warning",
-              "OctoPrint will restart itself when complete...",
+              'warning',
+              'OctoPrint will restart itself when complete...',
               3000,
-              "Clicked"
+              'Clicked'
             );
 
-            await OctoFarmClient.post(
-              "printers/rescanOctoPrintUpdates/" + printer._id
-            );
+            await OctoFarmClient.post('printers/rescanOctoPrintUpdates/' + printer._id);
           } else {
             UI.createAlert(
-              "danger",
-              "Updates failed to fire, manual intervention required!",
+              'danger',
+              'Updates failed to fire, manual intervention required!',
               3000,
-              "Clicked"
+              'Clicked'
             );
           }
         }
       },
     });
   } else {
-    UI.createAlert(
-      "info",
-      "Please rescan your device as there's no plugins actually available..."
-    );
+    UI.createAlert('info', "Please rescan your device as there's no plugins actually available...");
   }
 }
 
@@ -81,31 +72,27 @@ export function setupUpdateOctoPrintPluginsBtn(printer) {
     `octoprintPluginUpdate-${printer._id}`
   );
   if (octoPrintClientPluginUpdateBtn) {
-    octoPrintClientPluginUpdateBtn.addEventListener("click", async () => {
+    octoPrintClientPluginUpdateBtn.addEventListener('click', async () => {
       await updateBtnOnClick(printer._id);
     });
   }
 }
 
-export async function updateOctoPrintPlugins(
-  pluginList,
-  printer,
-  displayNameList
-) {
+export async function updateOctoPrintPlugins(pluginList, printer, displayNameList) {
   const data = {
     targets: pluginList,
   };
 
-  let pluginListMessage = "";
+  let pluginListMessage = '';
 
   let updateRequest = await OctoPrintClient.postNOAPI(
     printer,
-    "plugin/softwareupdate/update",
+    'plugin/softwareupdate/update',
     data
   );
 
   const body = {
-    action: "OctoPrint: Update Plugins",
+    action: 'OctoPrint: Update Plugins',
     opts: data,
     status: updateRequest.status,
   };
@@ -134,9 +121,9 @@ export async function updateOctoPrintPlugins(
 }
 
 export async function octoPrintPluginInstallAction(printer, plugin, action) {
-  if (printer.printerState.colour.category !== "Active") {
+  if (printer.printerState.colour.category !== 'Active') {
     let postData = {};
-    if (action === "install") {
+    if (action === 'install') {
       postData = {
         command: action.toLowerCase(),
         dependency_links: false,
@@ -149,11 +136,7 @@ export async function octoPrintPluginInstallAction(printer, plugin, action) {
       };
     }
 
-    const post = await OctoPrintClient.post(
-      printer,
-      "plugin/pluginmanager",
-      postData
-    );
+    const post = await OctoPrintClient.post(printer, 'plugin/pluginmanager', postData);
 
     const body = {
       action: `OctoPrint: ${postData.command}`,
@@ -165,8 +148,7 @@ export async function octoPrintPluginInstallAction(printer, plugin, action) {
     if (post.status === 409) {
       return {
         status: bulkActionsStates.ERROR,
-        message:
-          "OctoPrint reported a conflict when dealing with the request! are you printing?",
+        message: 'OctoPrint reported a conflict when dealing with the request! are you printing?',
       };
     } else if (post.status === 404) {
       return {
@@ -201,7 +183,7 @@ export async function octoPrintPluginInstallAction(printer, plugin, action) {
   } else {
     return {
       status: bulkActionsStates.SKIPPED,
-      message: "Skipped because your printer is currently active...",
+      message: 'Skipped because your printer is currently active...',
     };
   }
 }

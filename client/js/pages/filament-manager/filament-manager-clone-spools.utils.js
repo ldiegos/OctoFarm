@@ -2,14 +2,14 @@ import {
   updateProfileDrop,
   updatePrinterDrops,
   reRenderPageInformation,
-} from "./filament-manager-ui.utils";
-import { addSpool } from "./filament-manager.actions";
-import { findDigitsInString } from "../../constants/regex.constants";
-import { pageElements } from "./filament-manager.utils";
+} from './filament-manager-ui.utils';
+import { addSpool } from './filament-manager.actions';
+import { findDigitsInString } from '../../constants/regex.constants';
+import { pageElements } from './filament-manager.utils';
 
 export const cloneSpool = async (e) => {
   const row = e.parentElement.parentElement;
-  const editable = row.querySelectorAll("input");
+  const editable = row.querySelectorAll('input');
   const spool = [];
   editable.forEach((edit) => {
     spool.push(edit.placeholder);
@@ -19,30 +19,25 @@ export const cloneSpool = async (e) => {
   const nextSpoolIndex = pageElements.spoolsManagerTable.rows.length;
   const spoolClonedId = row.id;
   const clonedRowID = `clonedRow-${spoolClonedId}-`;
-  const currentSpoolsClonedCount =
-    document.querySelectorAll(`[id^=${clonedRowID}]`).length + 1;
+  const currentSpoolsClonedCount = document.querySelectorAll(`[id^=${clonedRowID}]`).length + 1;
 
   if (findDigitsInString.test(spoolName)) {
     const detectedDigits = findDigitsInString.exec(spoolName);
     const firstDetectedDigit = detectedDigits[0];
     const digitsLength = firstDetectedDigit.length;
-    if (firstDetectedDigit.toString()[0] === "0") {
-      const noZeros = firstDetectedDigit.replaceAll("0", "");
+    if (firstDetectedDigit.toString()[0] === '0') {
+      const noZeros = firstDetectedDigit.replaceAll('0', '');
       const zeroesToAddBack = digitsLength - noZeros.length;
       let numberParse = parseFloat(noZeros) + currentSpoolsClonedCount;
-      let zeroString = "";
+      let zeroString = '';
       if (zeroesToAddBack > 0) {
         for (let z = 0; z < zeroesToAddBack; z++) {
-          zeroString += "0";
+          zeroString += '0';
         }
       }
-      spoolName = spoolName.replace(
-        firstDetectedDigit,
-        `${zeroString}${numberParse}`
-      );
+      spoolName = spoolName.replace(firstDetectedDigit, `${zeroString}${numberParse}`);
     } else {
-      const increment =
-        parseFloat(firstDetectedDigit) + currentSpoolsClonedCount;
+      const increment = parseFloat(firstDetectedDigit) + currentSpoolsClonedCount;
       spoolName = spoolName.replace(firstDetectedDigit, increment);
     }
 
@@ -52,7 +47,7 @@ export const cloneSpool = async (e) => {
   }
 
   document.getElementById(row.id).insertAdjacentHTML(
-    "afterend",
+    'afterend',
     `
               <tr id="clonedRow-${spoolClonedId}-${nextSpoolIndex}">
                 <th style="display: none;">${nextSpoolIndex}</th>
@@ -87,9 +82,7 @@ export const cloneSpool = async (e) => {
 
   await updateProfileDrop();
   await updatePrinterDrops();
-  document.getElementById(
-    `spoolsProfile-${spoolClonedId}-${nextSpoolIndex}`
-  ).selectedIndex = 0;
+  document.getElementById(`spoolsProfile-${spoolClonedId}-${nextSpoolIndex}`).selectedIndex = 0;
   const spoolPrinterAssignment = document.getElementById(
     `spoolsPrinterAssignment-${spoolClonedId}-${nextSpoolIndex}`
   );
@@ -97,32 +90,16 @@ export const cloneSpool = async (e) => {
 
   document
     .getElementById(`clonedSave-${spoolClonedId}-${nextSpoolIndex}`)
-    .addEventListener("click", async function () {
-      const clonedRow = document.getElementById(
-        `clonedRow-${spoolClonedId}-${nextSpoolIndex}`
-      );
+    .addEventListener('click', async function () {
+      const clonedRow = document.getElementById(`clonedRow-${spoolClonedId}-${nextSpoolIndex}`);
       const addedSpool = addSpool(
-        document.getElementById(
-          `clonedName-${spoolClonedId}-${nextSpoolIndex}`
-        ),
-        document.getElementById(
-          `spoolsProfile-${spoolClonedId}-${nextSpoolIndex}`
-        ),
-        document.getElementById(
-          `clonedPrice-${spoolClonedId}-${nextSpoolIndex}`
-        ),
-        document.getElementById(
-          `clonedWeight-${spoolClonedId}-${nextSpoolIndex}`
-        ),
-        document.getElementById(
-          `clonedUsed-${spoolClonedId}-${nextSpoolIndex}`
-        ),
-        document.getElementById(
-          `clonedToolOffset-${spoolClonedId}-${nextSpoolIndex}`
-        ),
-        document.getElementById(
-          `clonedBedOffset-${spoolClonedId}-${nextSpoolIndex}`
-        )
+        document.getElementById(`clonedName-${spoolClonedId}-${nextSpoolIndex}`),
+        document.getElementById(`spoolsProfile-${spoolClonedId}-${nextSpoolIndex}`),
+        document.getElementById(`clonedPrice-${spoolClonedId}-${nextSpoolIndex}`),
+        document.getElementById(`clonedWeight-${spoolClonedId}-${nextSpoolIndex}`),
+        document.getElementById(`clonedUsed-${spoolClonedId}-${nextSpoolIndex}`),
+        document.getElementById(`clonedToolOffset-${spoolClonedId}-${nextSpoolIndex}`),
+        document.getElementById(`clonedBedOffset-${spoolClonedId}-${nextSpoolIndex}`)
       );
       if (addedSpool) {
         // Remove Row
@@ -134,10 +111,8 @@ export const cloneSpool = async (e) => {
 
   document
     .getElementById(`clonedDelete-${spoolClonedId}-${nextSpoolIndex}`)
-    .addEventListener("click", function () {
-      const clonedRow = document.getElementById(
-        `clonedRow-${spoolClonedId}-${nextSpoolIndex}`
-      );
+    .addEventListener('click', function () {
+      const clonedRow = document.getElementById(`clonedRow-${spoolClonedId}-${nextSpoolIndex}`);
       clonedRow.remove();
     });
 };

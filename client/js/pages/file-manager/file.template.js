@@ -1,7 +1,7 @@
-import Calc from "../../utils/calc";
+import Calc from '../../utils/calc';
 
 const getSpinnerElement = () => {
-  return "<i class=\"fa-solid fa-circle-notch fa-spin\"></i>";
+  return '<i class="fa-solid fa-circle-notch fa-spin"></i>';
 };
 
 export const getFolderTemplate = (folder, id) => {
@@ -23,7 +23,7 @@ export const getFolderTemplate = (folder, id) => {
                   <small class="float-right"></small>
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1 float-left">
-                      ${folder.display.replace(/_/g, " ")}
+                      ${folder.display.replace(/_/g, ' ')}
                     </h5>
                     <div
                       class="float-right btn-group flex-wrap btn-group-sm"
@@ -49,7 +49,7 @@ export const getFolderTemplate = (folder, id) => {
 };
 
 export const getFileTemplate = (file, printerURL, id) => {
-  let toolInfo = "";
+  let toolInfo = '';
   if (file.toolUnits.length === 0) {
     toolInfo = getSpinnerElement();
   } else {
@@ -58,20 +58,19 @@ export const getFileTemplate = (file, printerURL, id) => {
     });
   }
 
-  let thumbnail =
-    "<span class=\"text-center\"><i class=\"fas fa-file-code fa-2x\"></i></span>";
-  if (typeof file.thumbnail !== "undefined" && file.thumbnail !== null) {
+  let thumbnail = '<span class="text-center"><i class="fas fa-file-code fa-2x"></i></span>';
+  if (typeof file.thumbnail !== 'undefined' && file.thumbnail !== null) {
     const thumbnailURL = `/octoprint/${id}/${file.thumbnail}`;
     thumbnail = `<span class="text-center"><img src='${thumbnailURL}' width="100%" alt="thumbnail"></span>`;
   }
   let fileDate = new Date(file.uploadDate * 1000);
   const dateString = fileDate.toDateString();
   const timeString = fileDate.toTimeString().substring(0, 8);
-  let bgColour = "bg-secondary";
+  let bgColour = 'bg-secondary';
   if (file.last === true) {
-    bgColour = "bg-dark-success";
+    bgColour = 'bg-dark-success';
   } else if (file.last === false) {
-    bgColour = "bg-dark-failed";
+    bgColour = 'bg-dark-failed';
   }
 
   return `
@@ -120,7 +119,7 @@ export const getFileTemplate = (file, printerURL, id) => {
                 }">
                
                 Electricity Cost: ${
-                  typeof file?.electricityCosts !== "undefined"
+                  typeof file?.electricityCosts !== 'undefined'
                     ? file.electricityCosts.toFixed(2)
                     : getSpinnerElement()
                 } </span>    <br> 
@@ -130,7 +129,7 @@ export const getFileTemplate = (file, printerURL, id) => {
                 }"> 
                
                 Maintainence Cost: ${
-                  typeof file?.maintenanceCosts !== "undefined"
+                  typeof file?.maintenanceCosts !== 'undefined'
                     ? file.maintenanceCosts.toFixed(2)
                     : getSpinnerElement()
                 } </span>    <br> 
@@ -140,9 +139,7 @@ export const getFileTemplate = (file, printerURL, id) => {
                 <p class="mb-1 float-left">
                 <i class="fas fa-clock"></i><span id="fileDateClean-${
                   file.fullPath
-                }" class="date d-none"> ${
-    file.uploadDate
-  }</span><span id="fileDate-${
+                }" class="date d-none"> ${file.uploadDate}</span><span id="fileDate-${
     file.fullPath
   }"> ${dateString} ${timeString}</span><br>
                 <span class="size" id="fileSize-${file.fullPath}">${
@@ -171,9 +168,7 @@ export const getFileTemplate = (file, printerURL, id) => {
                 <i class="fas fa-sync"></i> Re-Sync
                 </button>
                 <button           title="Start printing file"
-            id="${id}*fileActionStart*${
-    file.fullPath
-  }" type="button" class="btn btn-success">
+            id="${id}*fileActionStart*${file.fullPath}" type="button" class="btn btn-success">
           <i class="fas fa-play"></i> Start
               </button>
               <button  title="Select file" id="${id}*fileActionSelect*${
@@ -226,15 +221,15 @@ export const noFilesToShow = () => {
 };
 
 export const printerProfileTemplate = (printer) => {
-    let defaultProfileString = "<i class=\"fas fa-cube\"></i> Couldn't find profile";
+  let defaultProfileString = '<i class="fas fa-cube"></i> Couldn\'t find profile';
 
-    const { currentProfile } = printer;
+  const { currentProfile } = printer;
 
-    if(!!currentProfile){
-        defaultProfileString = `<b>H:</b> ${printer.currentProfile.volume.height}mm x <b>W:</b> ${printer.currentProfile.volume.width}mm x <b>D:</b> ${printer.currentProfile.volume.depth}mm`
-    }
+  if (!!currentProfile) {
+    defaultProfileString = `<b>H:</b> ${printer.currentProfile.volume.height}mm x <b>W:</b> ${printer.currentProfile.volume.width}mm x <b>D:</b> ${printer.currentProfile.volume.depth}mm`;
+  }
 
-    return `
+  return `
     <small class="pt-2 float-left">
         ${defaultProfileString}
     </small>
@@ -244,8 +239,8 @@ export const printerProfileTemplate = (printer) => {
        <b>Nozzle Size:</b> 
        ${printer.currentProfile.extruder.nozzleDiameter}mm
     </small>
-    `
-}
+    `;
+};
 
 export const printerTemplate = (printer, storageWarning, extruderList) => {
   return `
@@ -263,20 +258,32 @@ export const printerTemplate = (printer, storageWarning, extruderList) => {
               >
                   
                   <small class="text-center">
-                    <p><i class="fas fa-print fa-2x" style="color:${printer.settingsAppearance.color}"></i></p>
-                      <span title="${printer.printerState.desc}" id="printerBadge-${printer._id}" class="tag badge badge-${printer.printerState.colour.name} badge-pill ${printer.printerState.colour.category} text-center">
+                    <p><i class="fas fa-print fa-2x" style="color:${
+                      printer.settingsAppearance.color
+                    }"></i></p>
+                      <span title="${printer.printerState.desc}" id="printerBadge-${
+    printer._id
+  }" class="tag badge badge-${printer.printerState.colour.name} badge-pill ${
+    printer.printerState.colour.category
+  } text-center">
                          ${printer.printerState.state}
                       </span>
-                      <span id="fileManagerfileCount-${printer._id}" class="badge badge-secondary badge-pill text-center">
+                      <span id="fileManagerfileCount-${
+                        printer._id
+                      }" class="badge badge-secondary badge-pill text-center">
                        Files: ${printer.fileList.fileList.length}
                     </span>
-                    <span id="fileManagerFolderCount-${printer._id}" class="badge badge-secondary badge-pill text-center">
+                    <span id="fileManagerFolderCount-${
+                      printer._id
+                    }" class="badge badge-secondary badge-pill text-center">
                        Folders: ${printer.fileList.folderList.length}
                     </span>
                   </small>
               </div>
               <div class="col-lg-10">
-                <button type="button" class="btn btn-secondary text-left" style="background-color: Transparent; border: 0; pointer-events: none" id="printerName-${printer._id}" disabled>${printer.printerName}</button>
+                <button type="button" class="btn btn-secondary text-left" style="background-color: Transparent; border: 0; pointer-events: none" id="printerName-${
+                  printer._id
+                }" disabled>${printer.printerName}</button>
                 ${storageWarning}
                 <div class="row">
 

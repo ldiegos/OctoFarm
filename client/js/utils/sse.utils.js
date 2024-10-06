@@ -1,4 +1,4 @@
-import { parse } from "flatted";
+import { parse } from 'flatted';
 
 export const asyncParse = async function (str) {
   try {
@@ -8,9 +8,7 @@ export const asyncParse = async function (str) {
   }
 };
 export const isFunction = function (functionToCheck) {
-  return (
-    functionToCheck && {}.toString.call(functionToCheck) === "[object Function]"
-  );
+  return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 };
 
 export const debounce = function (func, wait) {

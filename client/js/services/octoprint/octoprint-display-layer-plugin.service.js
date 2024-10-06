@@ -1,37 +1,23 @@
-import UI from "../../utils/ui";
+import UI from '../../utils/ui';
 const formatLayerDataPercent = (currentLayer, totalLayer) => {
-  let layerPercent = "0";
-  if (currentLayer !== "-" && totalLayer !== "-") {
+  let layerPercent = '0';
+  if (currentLayer !== '-' && totalLayer !== '-') {
     layerPercent = ((currentLayer / totalLayer) * 100).toFixed(0);
   }
   return layerPercent;
 };
-const formatLayerHeightPercent = (
-  currentHeightFormatted,
-  totalHeightFormatted
-) => {
-  let heightPercent = "0";
-  if (currentHeightFormatted !== "-" && totalHeightFormatted !== "-") {
-    heightPercent = (
-      (currentHeightFormatted / totalHeightFormatted) *
-      100
-    ).toFixed(0);
+const formatLayerHeightPercent = (currentHeightFormatted, totalHeightFormatted) => {
+  let heightPercent = '0';
+  if (currentHeightFormatted !== '-' && totalHeightFormatted !== '-') {
+    heightPercent = ((currentHeightFormatted / totalHeightFormatted) * 100).toFixed(0);
   }
   return heightPercent;
 };
 
 export const returnMinimalLayerDataDisplay = (layerData) => {
-  const {
-    currentLayer,
-    totalLayer,
-    currentHeightFormatted,
-    totalHeightFormatted,
-  } = layerData;
+  const { currentLayer, totalLayer, currentHeightFormatted, totalHeightFormatted } = layerData;
   const layerPercent = formatLayerDataPercent(currentLayer, totalLayer);
-  let heightPercent = formatLayerHeightPercent(
-    currentHeightFormatted,
-    totalHeightFormatted
-  );
+  let heightPercent = formatLayerHeightPercent(currentHeightFormatted, totalHeightFormatted);
   return `
         <i class="fa-solid fa-layer-group"></i> ${currentLayer} / ${totalLayer} (${layerPercent}%) | <i class="fa-solid fa-ruler"></i> ${currentHeightFormatted}mm / ${totalHeightFormatted}mm (${heightPercent}%)
     `;
@@ -49,16 +35,13 @@ export const returnExpandedLayerDataDisplay = (layerData) => {
     feedrate,
   } = layerData;
   const layerPercent = formatLayerDataPercent(currentLayer, totalLayer);
-  let heightPercent = formatLayerHeightPercent(
-    currentHeightFormatted,
-    totalHeightFormatted
-  );
+  let heightPercent = formatLayerHeightPercent(currentHeightFormatted, totalHeightFormatted);
   let averageLayerDuration = 0;
-  if (averageLayerDurationInSeconds !== "-") {
+  if (averageLayerDurationInSeconds !== '-') {
     averageLayerDuration = averageLayerDurationInSeconds;
   }
   let lastLayerDuration = 0;
-  if (lastLayerDurationInSeconds !== "-") {
+  if (lastLayerDurationInSeconds !== '-') {
     lastLayerDuration = lastLayerDurationInSeconds;
   }
   return {

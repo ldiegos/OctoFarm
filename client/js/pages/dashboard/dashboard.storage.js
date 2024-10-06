@@ -1,8 +1,5 @@
-import {
-  getLocalStorage,
-  saveLocalStorage,
-} from "../../services/local-storage.service";
-import { LOCAL_STORAGE_CONSTANTS } from "../../constants/local-storage.constants";
+import { getLocalStorage, saveLocalStorage } from '../../services/local-storage.service';
+import { LOCAL_STORAGE_CONSTANTS } from '../../constants/local-storage.constants';
 
 export class DashboardStorage {
   /**

@@ -1,8 +1,8 @@
 export const spoolsManagerTableRow = (spool, allowMultiSelectIsEnabled) => {
-  let multiple = "";
-  let unassignSpools = "";
+  let multiple = '';
+  let unassignSpools = '';
   if (allowMultiSelectIsEnabled) {
-    multiple = "multiple=true";
+    multiple = 'multiple=true';
     unassignSpools = `
             <button title="Unassign Spool" id="unassign-${spool._id}" type="button" class="btn btn-sm btn-warning unassign">
                 <i class="fa-solid fa-ban text-dark"></i>
@@ -12,16 +12,12 @@ export const spoolsManagerTableRow = (spool, allowMultiSelectIsEnabled) => {
   return `
     <tr data-jplist-item id="spoolList-${spool._id}" class="jpSpoolItem">
         <th style="display: none;">${spool._id}</th>
-        <th scope="row"><span class="d-none name">${spool.name}</span><input class="form-control" type="text" placeholder="${
+        <th scope="row"><span class="d-none name">${
           spool.name
-        }" disabled></th>
+        }</span><input class="form-control" type="text" placeholder="${spool.name}" disabled></th>
         <td>
-            <span class="d-none material" id="spoolsMaterialText-${
-              spool._id
-            }"></span>
-            <select id="spoolsProfile-${
-              spool._id
-            }" class="form-control" disabled>
+            <span class="d-none material" id="spoolsMaterialText-${spool._id}"></span>
+            <select id="spoolsProfile-${spool._id}" class="form-control" disabled>
             </select>
         </td>
         <td><span class="d-none price">${
@@ -47,9 +43,7 @@ export const spoolsManagerTableRow = (spool, allowMultiSelectIsEnabled) => {
         }" disabled></td>
         <td>
 
-            <select id="spoolsPrinterAssignment-${
-              spool._id
-            }" class="form-control" ${multiple}>
+            <select id="spoolsPrinterAssignment-${spool._id}" class="form-control" ${multiple}>
         </select>
     </td>
         <td>
@@ -121,7 +115,10 @@ export const profileManagerTableRow = (profile) => {
 
 export const materialsFilterList = (material) => {
   return `
-      <option href="#" data-path=".${material.toLowerCase().replace(/ /g, "_").replace(/[^\w\s]/gi, "_")}">${material}</option>
+      <option href="#" data-path=".${material
+        .toLowerCase()
+        .replace(/ /g, '_')
+        .replace(/[^\w\s]/gi, '_')}">${material}</option>
     `;
 };
 

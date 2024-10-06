@@ -8,8 +8,8 @@ export const getPrinterNameBadge = (id, colour, position = undefined) => {
   return `
              <span
                 class="btn mb-0 btn-sm ${
-                  position ? "" : "float-left"
-                } btn-block text-truncate text-${position ? position : "left"}"
+                  position ? '' : 'float-left'
+                } btn-block text-truncate text-${position ? position : 'left'}"
                 role="button"
                 style="max-width:${position ? 100 : 60}%;"
 

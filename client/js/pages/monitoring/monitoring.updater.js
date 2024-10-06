@@ -11,7 +11,7 @@ import {
 } from '../../services/printer-action-buttons.service.js';
 import OctoPrintClient from '../../services/octoprint/octoprint-client.service.js';
 import { checkTemps } from '../../utils/temperature-check.util.js';
-import { activateFullScreenView, updateFullScreenCameraInfo} from '../../utils/fullscreen.js';
+import { activateFullScreenView, updateFullScreenCameraInfo } from '../../utils/fullscreen.js';
 import OctoFarmClient from '../../services/octofarm-client.service';
 import { getControlList, getPrinterInfo } from './monitoring-view.state';
 import {
@@ -76,8 +76,6 @@ const returnPrinterInfo = (id) => {
     return statePrinterInfo;
   }
 };
-
-
 
 async function addListeners(printer) {
   //For now Control has to be seperated
@@ -1250,7 +1248,6 @@ const drawPrinterPanels = async (view, printers, clientSettings) => {
           updateState(p, clientSettings, view, p.sortIndex);
         }
       }
-
     }
   }
 };
@@ -1259,7 +1256,7 @@ const updatePrinterPanels = (view, printers, clientSettings) => {
   for (const p of printers) {
     if (!dragCheck()) {
       updateState(p, clientSettings, view, p.sortIndex);
-      updateFullScreenCameraInfo(p)
+      updateFullScreenCameraInfo(p);
     }
   }
 };

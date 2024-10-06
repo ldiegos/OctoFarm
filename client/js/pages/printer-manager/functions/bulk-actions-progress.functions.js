@@ -1,14 +1,14 @@
-import Calc from "../../../utils/calc";
-import bulkActionsStates from "../bulk-actions.constants";
+import Calc from '../../../utils/calc';
+import bulkActionsStates from '../bulk-actions.constants';
 
 const EL = {
-  MESSAGE: document.getElementById("bulkActionInfoMessage"),
-  PROGRESS_BAR: document.getElementById("bulkActionProgressBar"),
-  TABLE: document.getElementById("bulkActionResultsTable"),
-  COMPLETE_COUNT: document.getElementById("bulkActionCompleteCount"),
-  SKIPPED_COUNT: document.getElementById("bulkActionSkipped"),
-  ERROR_COUNT: document.getElementById("bulkActionError"),
-  WARNING_COUNT: document.getElementById("bulkActionWarning"),
+  MESSAGE: document.getElementById('bulkActionInfoMessage'),
+  PROGRESS_BAR: document.getElementById('bulkActionProgressBar'),
+  TABLE: document.getElementById('bulkActionResultsTable'),
+  COMPLETE_COUNT: document.getElementById('bulkActionCompleteCount'),
+  SKIPPED_COUNT: document.getElementById('bulkActionSkipped'),
+  ERROR_COUNT: document.getElementById('bulkActionError'),
+  WARNING_COUNT: document.getElementById('bulkActionWarning'),
 };
 
 const INITIAL_MESSAGE =
@@ -37,42 +37,42 @@ export function generateTableRows(printers) {
   EL.SKIPPED_COUNT.innerHTML = 0;
   EL.COMPLETE_COUNT.innerHTML = 0;
   EL.WARNING_COUNT.innerHTML = 0;
-  EL.TABLE.innerHTML = "";
+  EL.TABLE.innerHTML = '';
   printers.forEach((printer, index) => {
     printer.index = index;
-    EL.TABLE.insertAdjacentHTML("beforeend", tableRowTemplate(printer));
+    EL.TABLE.insertAdjacentHTML('beforeend', tableRowTemplate(printer));
   });
-  $("#bulkActionProgressModal").modal("handleUpdate");
+  $('#bulkActionProgressModal').modal('handleUpdate');
 }
 
 export function updateTableRow(id, status, message, noBreak) {
-  const resultElement = document.getElementById("result-" + id);
-  const messageElement = document.getElementById("message-" + id);
+  const resultElement = document.getElementById('result-' + id);
+  const messageElement = document.getElementById('message-' + id);
   if (status === bulkActionsStates.SKIPPED) {
-    if (!resultElement.innerHTML.includes("fa-spin")) {
-      resultElement.innerHTML = resultElement.innerHTML + "<br>" + SKIPPED;
+    if (!resultElement.innerHTML.includes('fa-spin')) {
+      resultElement.innerHTML = resultElement.innerHTML + '<br>' + SKIPPED;
     } else {
       resultElement.innerHTML = SKIPPED;
     }
 
     EL.SKIPPED_COUNT.innerHTML = parseInt(EL.SKIPPED_COUNT.innerHTML) + 1;
   } else if (status === bulkActionsStates.ERROR) {
-    if (!resultElement.innerHTML.includes("fa-spin")) {
-      resultElement.innerHTML = resultElement.innerHTML + "<br>" + ERROR;
+    if (!resultElement.innerHTML.includes('fa-spin')) {
+      resultElement.innerHTML = resultElement.innerHTML + '<br>' + ERROR;
     } else {
       resultElement.innerHTML = ERROR;
     }
     EL.ERROR_COUNT.innerHTML = parseInt(EL.ERROR_COUNT.innerHTML) + 1;
   } else if (status === bulkActionsStates.SUCCESS) {
-    if (!resultElement.innerHTML.includes("fa-spin")) {
-      resultElement.innerHTML = resultElement.innerHTML + "<br>" + SUCCESS;
+    if (!resultElement.innerHTML.includes('fa-spin')) {
+      resultElement.innerHTML = resultElement.innerHTML + '<br>' + SUCCESS;
     } else {
       resultElement.innerHTML = SUCCESS;
     }
     EL.COMPLETE_COUNT.innerHTML = parseInt(EL.COMPLETE_COUNT.innerHTML) + 1;
   } else if (status === bulkActionsStates.WARNING) {
-    if (!resultElement.innerHTML.includes("fa-spin")) {
-      resultElement.innerHTML = resultElement.innerHTML + "<br>" + WARNING;
+    if (!resultElement.innerHTML.includes('fa-spin')) {
+      resultElement.innerHTML = resultElement.innerHTML + '<br>' + WARNING;
     } else {
       resultElement.innerHTML = WARNING;
     }
@@ -82,7 +82,7 @@ export function updateTableRow(id, status, message, noBreak) {
     if (noBreak) {
       messageElement.innerHTML = messageElement.innerHTML + message;
     } else {
-      messageElement.innerHTML = messageElement.innerHTML + "<br>" + message;
+      messageElement.innerHTML = messageElement.innerHTML + '<br>' + message;
     }
   } else {
     messageElement.innerHTML = message;
@@ -91,17 +91,17 @@ export function updateTableRow(id, status, message, noBreak) {
 
 export function showBulkActionsModal() {
   EL.MESSAGE.innerHTML = INITIAL_MESSAGE;
-  $("#bulkActionProgressModal").modal("show");
+  $('#bulkActionProgressModal').modal('show');
 }
 
 export function updateBulkActionsProgress(done, total) {
-  if (done < total) EL.PROGRESS_BAR.classList = "progress-bar bg-warning";
+  if (done < total) EL.PROGRESS_BAR.classList = 'progress-bar bg-warning';
   if (done === total) {
     EL.MESSAGE.innerHTML = COMPLETE_MESSAGE;
-    EL.PROGRESS_BAR.classList = "progress-bar bg-success";
-    EL.MESSAGE.classList = "alert alert-success text-dark";
+    EL.PROGRESS_BAR.classList = 'progress-bar bg-success';
+    EL.MESSAGE.classList = 'alert alert-success text-dark';
   }
   const currentPercent = Calc.getPercentage(done, total);
-  EL.PROGRESS_BAR.style.width = currentPercent + "%";
-  EL.PROGRESS_BAR.innerHTML = currentPercent + "%";
+  EL.PROGRESS_BAR.style.width = currentPercent + '%';
+  EL.PROGRESS_BAR.innerHTML = currentPercent + '%';
 }

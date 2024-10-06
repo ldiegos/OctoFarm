@@ -4,7 +4,7 @@ export class ApplicationError extends Error {
     super();
     Object.assign(options, overrides);
 
-    this.name = "OctoFarm Error";
+    this.name = 'OctoFarm Error';
     this.type = options.type;
     this.code = options.code;
     this.message = options.message;

@@ -1,11 +1,10 @@
 export function returnPluginListTemplate(plugin) {
   //Also need check inplace for incompatible...
-  let abandoned = "";
+  let abandoned = '';
   if (plugin.abandoned === true) {
-    abandoned =
-      '<i class="fa fa-heartbeat" title="Abandoned by its maintainer"></i>';
+    abandoned = '<i class="fa fa-heartbeat" title="Abandoned by its maintainer"></i>';
   }
-  let latestRelease = "";
+  let latestRelease = '';
   if (plugin?.github?.latest_release) {
     latestRelease = `
     <small class="prop" title="Github stars"><i class="fa fa-star"></i> <span >${plugin.github.stars}</span></small>
@@ -14,7 +13,7 @@ export function returnPluginListTemplate(plugin) {
   }
 
   return `
-      <div class="entry" id="plugin-${plugin.title.replace(/ /g, "_")}">
+      <div class="entry" id="plugin-${plugin.title.replace(/ /g, '_')}">
                         <div class="row-fluid">
                             <div class="span12">
                                 <div>
@@ -26,17 +25,17 @@ export function returnPluginListTemplate(plugin) {
                                 <div class="meta">
                                     <small class="prop">
                                       <i class="fa fa-info"></i>
-                                      &nbsp;<a target="_blank" href="${
-                                        plugin.page
-                                      }" title="${plugin.page}">
+                                      &nbsp;<a target="_blank" href="${plugin.page}" title="${
+    plugin.page
+  }">
                                       Details
                                       </a>
                                     </small>
                                     <small class="prop">
                                         <i class="fa fa-home"></i>
-                                        &nbsp;<a target="_blank" href="${
-                                          plugin.homepage
-                                        }" title="${plugin.homepage}">
+                                        &nbsp;<a target="_blank" href="${plugin.homepage}" title="${
+    plugin.homepage
+  }">
                                         Homepage
                                         </a>
                                       </small>
@@ -44,9 +43,7 @@ export function returnPluginListTemplate(plugin) {
                                       plugin.author
                                     }">${plugin.author}</span></small>
                                 </div>
-                                <div class="muted"><small>${
-                                  plugin.description
-                                }</small></div>
+                                <div class="muted"><small>${plugin.description}</small></div>
                                 <div class="stats">
                                     <small class="prop" title="License"><i class="fa fa-gavel"></i> <span>${
                                       plugin.license
@@ -68,7 +65,7 @@ export function returnPluginListTemplate(plugin) {
 
 export function returnPluginSelectTemplate(plugin) {
   return `
-      <div class="entry" id="plugin-${plugin.key.replace(/ /g, "_")}">
+      <div class="entry" id="plugin-${plugin.key.replace(/ /g, '_')}">
                         <div class="row-fluid">
                             <div class="span12">
                                 <div>

@@ -1,38 +1,38 @@
-import Calc from "../../../utils/calc";
-import OctoFarmClient from "../../../services/octofarm-client.service";
-import ApexCharts from "apexcharts";
+import Calc from '../../../utils/calc';
+import OctoFarmClient from '../../../services/octofarm-client.service';
+import ApexCharts from 'apexcharts';
 
 let historyBarChart = null;
 let historyPieChart = null;
 
 export default class PrinterStatisticsService {
   static async returnPrinterStatsTemplate(stats) {
-    let display = "";
-    let noHistoryMessage = "";
-    let safeModeCheck = "";
+    let display = '';
+    let noHistoryMessage = '';
+    let safeModeCheck = '';
 
-    let printerFirmware = "Unknown";
-    let octoPrintVersion = "Unknown";
-    let pythonVersion = "Unknown";
-    let pythonPip = "Unknown";
-    let osPlatform = "Unknown";
-    let hardwareCores = "Unknown";
-    let hardwareRam = "Unknown";
+    let printerFirmware = 'Unknown';
+    let octoPrintVersion = 'Unknown';
+    let pythonVersion = 'Unknown';
+    let pythonPip = 'Unknown';
+    let osPlatform = 'Unknown';
+    let hardwareCores = 'Unknown';
+    let hardwareRam = 'Unknown';
 
     printerFirmware = !!stats.printerFirmware;
 
     if (stats.octoPrintSystemInfo) {
-      pythonVersion = stats.octoPrintSystemInfo["env.python.version"];
+      pythonVersion = stats.octoPrintSystemInfo['env.python.version'];
 
-      pythonPip = stats.octoPrintSystemInfo["env.python.pip"];
+      pythonPip = stats.octoPrintSystemInfo['env.python.pip'];
 
-      osPlatform = stats.octoPrintSystemInfo["env.os.platform"];
+      osPlatform = stats.octoPrintSystemInfo['env.os.platform'];
 
-      hardwareCores = stats.octoPrintSystemInfo["env.hardware.cores"];
+      hardwareCores = stats.octoPrintSystemInfo['env.hardware.cores'];
 
-      hardwareRam = stats.octoPrintSystemInfo["env.hardware.ram"];
+      hardwareRam = stats.octoPrintSystemInfo['env.hardware.ram'];
 
-      if (stats.octoPrintSystemInfo["octoprint.safe_mode"]) {
+      if (stats.octoPrintSystemInfo['octoprint.safe_mode']) {
         safeModeCheck = `
         <i title="You are not in safe mode, all is fine" class="fas fa-thumbs-down text-success"></i>
       `;
@@ -41,17 +41,15 @@ export default class PrinterStatisticsService {
         <i title=\"Something maybe wrong with your system? Detecting safe mode\" class=\"fas fa-thumbs-up text-success\"></i>
       `;
       }
-      if (
-        typeof stats?.octoPrintSystemInfo["printer.firmware"] !== "undefined"
-      ) {
-        printerFirmware = stats.octoPrintSystemInfo["printer.firmware"];
+      if (typeof stats?.octoPrintSystemInfo['printer.firmware'] !== 'undefined') {
+        printerFirmware = stats.octoPrintSystemInfo['printer.firmware'];
       }
     }
     if (stats.historyByDay.length === 0) {
       noHistoryMessage = `<div class='row'>
                     <div class="col-12"><h5>Sorry but your printer currently has no history captured. Please run some prints to generate information here.</h5></div>
                 </div>`;
-      display = "d-none";
+      display = 'd-none';
     }
     return `
             <div class="col-md-12 col-lg-4">
@@ -69,9 +67,7 @@ export default class PrinterStatisticsService {
                                   <div class="col-md-12 col-lg-6">
                                    <small><b>OS Platform:</b> ${osPlatform}</small><br>
                                    <small><b>OS Cores:</b> ${hardwareCores}</small><br>
-                                    <small><b>OS ram:</b> ${Calc.bytes(
-                                      hardwareRam
-                                    )}</small><br>
+                                    <small><b>OS ram:</b> ${Calc.bytes(hardwareRam)}</small><br>
                                      <small><b>Safe Mode Check:</b> ${safeModeCheck} </small><br>
                                 </div>
                               </div>
@@ -136,9 +132,7 @@ export default class PrinterStatisticsService {
               <div class="card text-white bg-dark mb-3">
                 <div class="card-header">Age</div>
                 <div class="card-body">
-                  <p class="card-text">${Calc.generateTime(
-                    stats.timeTotal / 1000
-                  )}</p>
+                  <p class="card-text">${Calc.generateTime(stats.timeTotal / 1000)}</p>
                 </div>
               </div>
             </div>
@@ -339,24 +333,24 @@ export default class PrinterStatisticsService {
   static async loadStatistics(id) {
     historyBarChart = null;
     historyPieChart = null;
-    let get = await OctoFarmClient.get("history/statistics/" + id);
+    let get = await OctoFarmClient.get('history/statistics/' + id);
     //Setup page
-    let printerStatsWrapper = document.getElementById("printerStatistics");
-    printerStatsWrapper.innerHTML = "";
+    let printerStatsWrapper = document.getElementById('printerStatistics');
+    printerStatsWrapper.innerHTML = '';
     printerStatsWrapper.innerHTML = await this.returnPrinterStatsTemplate(get);
-    document.getElementById("printerStatisticsTitle").innerHTML =
-      "Printer Statistics: " + get.printerName;
+    document.getElementById('printerStatisticsTitle').innerHTML =
+      'Printer Statistics: ' + get.printerName;
     //Check if graph is on DOM...
     const printerHistoryOptions = {
       chart: {
-        type: "bar",
-        width: "100%",
-        height: "250px",
+        type: 'bar',
+        width: '100%',
+        height: '250px',
         stacked: true,
         stroke: {
           show: true,
-          curve: "smooth",
-          lineCap: "butt",
+          curve: 'smooth',
+          lineCap: 'butt',
           width: 1,
           dashArray: 0,
         },
@@ -374,52 +368,52 @@ export default class PrinterStatisticsService {
         zoom: {
           enabled: false,
         },
-        background: "#303030",
+        background: '#303030',
       },
       dataLabels: {
         enabled: false,
         background: {
           enabled: true,
-          foreColor: "#000",
+          foreColor: '#000',
           padding: 1,
           borderRadius: 2,
           borderWidth: 1,
-          borderColor: "#fff",
+          borderColor: '#fff',
           opacity: 0.9,
         },
         formatter: function (val, opts) {
           if (val !== null) {
-            return val.toFixed(0) + "g";
+            return val.toFixed(0) + 'g';
           }
         },
       },
       colors: [
-        "#00bc8c",
-        "#f39c12",
-        "#e74c3c",
-        "#88ff00",
-        "#00ff88",
-        "#00b7ff",
-        "#4400ff",
-        "#8000ff",
-        "#ff00f2",
+        '#00bc8c',
+        '#f39c12',
+        '#e74c3c',
+        '#88ff00',
+        '#00ff88',
+        '#00b7ff',
+        '#4400ff',
+        '#8000ff',
+        '#ff00f2',
       ],
       toolbar: {
         show: false,
       },
       theme: {
-        mode: "dark",
+        mode: 'dark',
       },
       noData: {
-        text: "Loading...",
+        text: 'Loading...',
       },
       series: [],
       yaxis: [
         {
           title: {
-            text: "Count",
+            text: 'Count',
           },
-          seriesName: "Success",
+          seriesName: 'Success',
           labels: {
             formatter: function (val) {
               if (val !== null) {
@@ -430,9 +424,9 @@ export default class PrinterStatisticsService {
         },
         {
           title: {
-            text: "Count",
+            text: 'Count',
           },
-          seriesName: "Success",
+          seriesName: 'Success',
           labels: {
             formatter: function (val) {
               if (val !== null) {
@@ -444,9 +438,9 @@ export default class PrinterStatisticsService {
         },
         {
           title: {
-            text: "Count",
+            text: 'Count',
           },
-          seriesName: "Success",
+          seriesName: 'Success',
           labels: {
             formatter: function (val) {
               if (val !== null) {
@@ -458,7 +452,7 @@ export default class PrinterStatisticsService {
         },
       ],
       xaxis: {
-        type: "datetime",
+        type: 'datetime',
         tickAmount: 10,
         labels: {
           formatter: function (value, timestamp) {
@@ -471,29 +465,29 @@ export default class PrinterStatisticsService {
     if (historyBarChart !== null) {
       historyBarChart.destroy();
       historyBarChart = new ApexCharts(
-        document.querySelector("#historyGraph"),
+        document.querySelector('#historyGraph'),
         printerHistoryOptions
       );
       historyBarChart.render();
       historyBarChart.updateSeries(get.historyByDay);
     } else {
       historyBarChart = new ApexCharts(
-        document.querySelector("#historyGraph"),
+        document.querySelector('#historyGraph'),
         printerHistoryOptions
       );
     }
     const optionsUtilisation = {
       chart: {
-        type: "donut",
-        width: "100%",
-        height: "100%",
+        type: 'donut',
+        width: '100%',
+        height: '100%',
         animations: {
           enabled: true,
         },
-        background: "#303030",
+        background: '#303030',
       },
       theme: {
-        mode: "dark",
+        mode: 'dark',
       },
       plotOptions: {
         pie: {
@@ -515,24 +509,24 @@ export default class PrinterStatisticsService {
         },
       },
       noData: {
-        text: "Loading...",
+        text: 'Loading...',
       },
       dataLabels: {
         enabled: false,
       },
       series: [],
-      labels: ["Active", "Idle", "Offline"],
-      colors: ["#00bc8c", "#444", "#e74c3c"],
+      labels: ['Active', 'Idle', 'Offline'],
+      colors: ['#00bc8c', '#444', '#e74c3c'],
       legend: {
         show: true,
         showForSingleSeries: false,
         showForNullSeries: true,
         showForZeroSeries: true,
-        position: "bottom",
-        horizontalAlign: "center",
+        position: 'bottom',
+        horizontalAlign: 'center',
         floating: false,
-        fontSize: "11px",
-        fontFamily: "Helvetica, Arial",
+        fontSize: '11px',
+        fontFamily: 'Helvetica, Arial',
         fontWeight: 400,
         formatter: undefined,
         inverseOrder: false,
@@ -549,7 +543,7 @@ export default class PrinterStatisticsService {
           width: 9,
           height: 9,
           strokeWidth: 0,
-          strokeColor: "#fff",
+          strokeColor: '#fff',
           fillColors: undefined,
           radius: 1,
           customHTML: undefined,
@@ -572,14 +566,14 @@ export default class PrinterStatisticsService {
     if (historyPieChart !== null) {
       historyPieChart.destroy();
       historyPieChart = new ApexCharts(
-        document.querySelector("#printerUtilisationGraph"),
+        document.querySelector('#printerUtilisationGraph'),
         optionsUtilisation
       );
       historyPieChart.render();
       historyPieChart.updateSeries(get.printerUtilisation);
     } else {
       historyPieChart = new ApexCharts(
-        document.querySelector("#printerUtilisationGraph"),
+        document.querySelector('#printerUtilisationGraph'),
         optionsUtilisation
       );
     }

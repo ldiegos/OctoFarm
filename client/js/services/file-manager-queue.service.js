@@ -1,13 +1,10 @@
-import {
-  getFileQueueRow,
-  getFileRowID,
-} from "../pages/file-manager/upload-queue.templates";
+import { getFileQueueRow, getFileRowID } from '../pages/file-manager/upload-queue.templates';
 
 let FILE_QUEUE_TABLE_BODY;
 
 export default class Queue {
   constructor() {
-    FILE_QUEUE_TABLE_BODY = document.getElementById("uploadQueueTableBody");
+    FILE_QUEUE_TABLE_BODY = document.getElementById('uploadQueueTableBody');
     this.data = [];
   }
   add(record) {
@@ -52,10 +49,7 @@ export default class Queue {
     };
     file.index = getFileRowID(file);
     if (!!FILE_QUEUE_TABLE_BODY) {
-      FILE_QUEUE_TABLE_BODY.insertAdjacentHTML(
-        "beforeend",
-        getFileQueueRow(file)
-      );
+      FILE_QUEUE_TABLE_BODY.insertAdjacentHTML('beforeend', getFileQueueRow(file));
     }
   }
   removeFromFileQueue(record) {

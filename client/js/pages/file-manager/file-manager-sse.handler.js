@@ -8,7 +8,7 @@ import {
   updateFileSize,
   updateMaintenanceCost,
   updateElectricityCost,
-} from "./file-information-update.helpers";
+} from './file-information-update.helpers';
 
 export function updateLiveFileInformation(id, data) {
   if (!!id && !!data) {

@@ -4,8 +4,8 @@ import {
   dataLabelBackground,
   defaultLoadingText,
   defaultTheme,
-} from "./chart.options";
-import Calc from "../../utils/calc";
+} from './chart.options';
+import Calc from '../../utils/calc';
 
 export const toFixedTempCelciusFormatter = (value) => {
   return `${value}°C`;
@@ -19,9 +19,9 @@ export const toFixedFormatter = (value) => {
 
 export const toFixedWeightGramFormatter = (value) => {
   if (!!value) {
-    return value.toFixed(0) + "g";
+    return value.toFixed(0) + 'g';
   } else {
-    return "";
+    return '';
   }
 };
 
@@ -44,28 +44,28 @@ export function percentageFormatter(value) {
 export function indoorAirQualityFormatter(value) {
   let state = null;
   if (value === null) {
-    return "";
+    return '';
   } else {
     if (Calc.isBetween(value, 0, 50)) {
-      state = "Excellent";
+      state = 'Excellent';
     }
     if (Calc.isBetween(value, 51, 100)) {
-      state = "Good";
+      state = 'Good';
     }
     if (Calc.isBetween(value, 101, 150)) {
-      state = "Lightly Polluted";
+      state = 'Lightly Polluted';
     }
     if (Calc.isBetween(value, 151, 200)) {
-      state = "Moderately Polluted";
+      state = 'Moderately Polluted';
     }
     if (Calc.isBetween(value, 201, 250)) {
-      state = "Heavily Polluted";
+      state = 'Heavily Polluted';
     }
     if (Calc.isBetween(value, 251, 350)) {
-      state = "Severely Polluted";
+      state = 'Severely Polluted';
     }
     if (Calc.isBetween(value, 350, 500)) {
-      state = "Extremely Polluted";
+      state = 'Extremely Polluted';
     }
   }
   return `${value}: ${state}`;
@@ -74,7 +74,7 @@ export function pascalPressureFormatter(value) {
   if (value !== null) {
     return `${value} Pa`;
   } else {
-    return "";
+    return '';
   }
 }
 
@@ -110,21 +110,21 @@ export function tooltipDataPointFormatter(val, opt) {
 
 export function defaultChartWidth() {
   return {
-    width: "100%",
+    width: '100%',
   };
 }
 
 export function fullChartDimensions() {
   return {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   };
 }
 
 export function defaultChartDimensions() {
   return {
     ...defaultChartWidth(),
-    height: "90%",
+    height: '90%',
   };
 }
 
@@ -236,32 +236,20 @@ export function getHiddenToolTempRepeated(count) {
 }
 
 export const temperatureLabel = getChartLabel(
-  "Temp",
-  "Temperature",
+  'Temp',
+  'Temperature',
   toFixedTempCelciusFormatter,
   0,
   45
 );
 
-export const humidityLabel = getChartLabel(
-  "Humidity",
-  "Humidity",
-  percentageFormatter,
-  0,
-  100
-);
+export const humidityLabel = getChartLabel('Humidity', 'Humidity', percentageFormatter, 0, 100);
 
-export const pressureLabel = getChartLabel(
-  "Pressure",
-  "Pressure",
-  pascalPressureFormatter,
-  0,
-  100
-);
+export const pressureLabel = getChartLabel('Pressure', 'Pressure', pascalPressureFormatter, 0, 100);
 
 export const iaqLabel = getChartLabel(
-  "Indoor Air Quality",
-  "IAQ",
+  'Indoor Air Quality',
+  'IAQ',
   indoorAirQualityFormatter,
   0,
   500

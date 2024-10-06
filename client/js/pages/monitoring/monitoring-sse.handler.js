@@ -1,8 +1,8 @@
-import { getViewType, setMonitoringPrinterInfo } from "./monitoring-view.state";
-import { initMonitoring } from "./monitoring.updater";
+import { getViewType, setMonitoringPrinterInfo } from './monitoring-view.state';
+import { initMonitoring } from './monitoring.updater';
 
 let controlModal = false;
-export const monitoringWorkerURL = "/monitoringInfo/get/";
+export const monitoringWorkerURL = '/monitoringInfo/get/';
 
 export async function monitoringSSEventHandler(data) {
   if (!!data) {
@@ -14,7 +14,7 @@ export async function monitoringSSEventHandler(data) {
 
     // Grab control modal element...
     if (!controlModal) {
-      controlModal = document.getElementById("printerManagerModal");
+      controlModal = document.getElementById('printerManagerModal');
     }
 
     await initMonitoring(printerInfo, data.clientSettings, getViewType());

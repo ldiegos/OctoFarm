@@ -1,6 +1,6 @@
-import { DashboardStorage } from "./dashboard.storage";
-import "gridstack/dist/gridstack.min.css";
-import { GridStack } from "gridstack";
+import { DashboardStorage } from './dashboard.storage';
+import 'gridstack/dist/gridstack.min.css';
+import { GridStack } from 'gridstack';
 
 const gridStack = GridStack.init({
   cellHeight: 50,
@@ -38,7 +38,7 @@ export async function loadGrid() {
  * @param cb
  */
 export function bindGraphChangeUpdate(cb) {
-  gridStack.on("change", async function (event, items) {
+  gridStack.on('change', async function (event, items) {
     DashboardStorage.saveGridStackConfig(gridStack);
     await cb(event, items);
   });

@@ -1,19 +1,12 @@
-import OctoFarmClient from "./octofarm-client.service";
-import { isFilamentManagerPluginSyncEnabled } from "./octoprint/filament-manager-plugin.service";
-import { selectFilament } from "../pages/filament-manager/filament-manager.actions";
+import OctoFarmClient from './octofarm-client.service';
+import { isFilamentManagerPluginSyncEnabled } from './octoprint/filament-manager-plugin.service';
+import { selectFilament } from '../pages/filament-manager/filament-manager.actions';
 
 const dropDownListTemplate = (spool, multiSelect) => {
-  const {
-    spoolID,
-    spoolName,
-    spoolRemain,
-    spoolMaterial,
-    spoolManufacturer,
-    selected,
-  } = spool;
-  let disabled = "";
+  const { spoolID, spoolName, spoolRemain, spoolMaterial, spoolManufacturer, selected } = spool;
+  let disabled = '';
   if (selected && !multiSelect) {
-    disabled = "disabled";
+    disabled = 'disabled';
   }
   if (multiSelect) {
     return `
@@ -27,19 +20,14 @@ const dropDownListTemplate = (spool, multiSelect) => {
 };
 
 export const findBigFilamentDropDowns = () => {
-  return document.querySelectorAll("[id$=bigFilamentSelect]");
+  return document.querySelectorAll('[id$=bigFilamentSelect]');
 };
 
 export const findMiniFilamentDropDownsSelect = (printerID, toolIndex) => {
-  return document.getElementById(
-    `tool-${printerID}-${toolIndex}-miniFilamentSelect`
-  );
+  return document.getElementById(`tool-${printerID}-${toolIndex}-miniFilamentSelect`);
 };
 
-export const returnBigFilamentSelectorTemplate = (
-  toolNumber,
-  printerID = undefined
-) => {
+export const returnBigFilamentSelectorTemplate = (toolNumber, printerID = undefined) => {
   let toolID = toolNumber;
   if (!!printerID) {
     toolID = `${printerID}-${toolNumber}`;
@@ -70,38 +58,24 @@ export const returnMiniFilamentSelectorTemplate = (printerID, toolNumber) => {
 };
 
 export async function returnDropDownList() {
-  const { dropDownList } = await OctoFarmClient.get(
-    "filament/get/dropDownList"
-  );
+  const { dropDownList } = await OctoFarmClient.get('filament/get/dropDownList');
   return dropDownList;
 }
 
-export async function fillMiniFilamentDropDownList(
-  element,
-  printer,
-  toolIndex,
-  dropDownList
-) {
+export async function fillMiniFilamentDropDownList(element, printer, toolIndex, dropDownList) {
   await redrawMiniFilamentDropDownList(element, printer, toolIndex, dropDownList);
-  element.addEventListener("change", async (event) => {
+  element.addEventListener('change', async (event) => {
     await selectFilament([`${printer._id}-${toolIndex}`], event.target.value);
     await redrawMiniFilamentDropDownList(element, printer, toolIndex, dropDownList);
   });
 }
 
 async function redrawMiniFilamentDropDownList(element, printer, toolIndex, filamentDropDown) {
-  element.innerHTML = "";
-  const { allowMultiSelectIsEnabled } =
-    await isFilamentManagerPluginSyncEnabled();
-  element.insertAdjacentHTML(
-    "beforeend",
-    '<option value="0">No Spool</option>'
-  );
+  element.innerHTML = '';
+  const { allowMultiSelectIsEnabled } = await isFilamentManagerPluginSyncEnabled();
+  element.insertAdjacentHTML('beforeend', '<option value="0">No Spool</option>');
   filamentDropDown.forEach((spool) => {
-    element.insertAdjacentHTML(
-      "beforeend",
-      dropDownListTemplate(spool, allowMultiSelectIsEnabled)
-    );
+    element.insertAdjacentHTML('beforeend', dropDownListTemplate(spool, allowMultiSelectIsEnabled));
   });
   const { _id: printerID } = printer;
   const selectedFilament = await OctoFarmClient.getSelectedFilament(printerID);
@@ -113,19 +87,12 @@ async function redrawMiniFilamentDropDownList(element, printer, toolIndex, filam
 }
 
 async function redrawFilamentDropDownList(element, printer, toolIndex) {
-  element.innerHTML = "";
+  element.innerHTML = '';
   const filamentDropDown = await returnDropDownList();
-  const { allowMultiSelectIsEnabled } =
-    await isFilamentManagerPluginSyncEnabled();
-  element.insertAdjacentHTML(
-      "beforeend",
-      '<option value="0">No Spool</option>'
-  );
+  const { allowMultiSelectIsEnabled } = await isFilamentManagerPluginSyncEnabled();
+  element.insertAdjacentHTML('beforeend', '<option value="0">No Spool</option>');
   filamentDropDown.forEach((spool) => {
-    element.insertAdjacentHTML(
-      "beforeend",
-      dropDownListTemplate(spool, allowMultiSelectIsEnabled)
-    );
+    element.insertAdjacentHTML('beforeend', dropDownListTemplate(spool, allowMultiSelectIsEnabled));
   });
   const { _id: printerID } = printer;
   const selectedFilament = await OctoFarmClient.getSelectedFilament(printerID);
@@ -137,25 +104,22 @@ async function redrawFilamentDropDownList(element, printer, toolIndex) {
 }
 
 export async function drawHistoryDropDown(element, selectedID) {
-  element.innerHTML = "";
+  element.innerHTML = '';
   const filamentDropDown = await returnDropDownList();
-  element.insertAdjacentHTML(
-      "beforeend",
-      '<option value="0">No Spool</option>'
-  );
+  element.insertAdjacentHTML('beforeend', '<option value="0">No Spool</option>');
   filamentDropDown.forEach((spool) => {
-    element.insertAdjacentHTML("beforeend", dropDownListTemplate(spool, true));
+    element.insertAdjacentHTML('beforeend', dropDownListTemplate(spool, true));
   });
   if (!!selectedID) {
     element.value = selectedID;
   } else {
-    element.value = "0";
+    element.value = '0';
   }
 }
 
 export async function fillFilamentDropDownList(element, printer, toolIndex) {
   await redrawFilamentDropDownList(element, printer, toolIndex);
-  element.addEventListener("change", async (event) => {
+  element.addEventListener('change', async (event) => {
     await selectFilament([`${printer._id}-${toolIndex}`], event.target.value);
     await redrawFilamentDropDownList(element, printer, toolIndex);
   });

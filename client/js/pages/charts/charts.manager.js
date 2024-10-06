@@ -1,15 +1,15 @@
-import ApexCharts from "apexcharts";
-import { dashboardOptions } from "./dashboard.options";
+import ApexCharts from 'apexcharts';
+import { dashboardOptions } from './dashboard.options';
 
 const chartIds = {
-  hourlyTotalTemperatureChart: "#hourlyTotalTemperatureChart",
-  weeklyUtilisationPerDayHeatMap: "#weeklyUtilisationPerDayHeatMap",
-  currentStatusChart: "#currentStatusChart",
-  currentUtilisationChart: "#currentUtilisation",
-  filamentUsageOverTimeChart: "#filamentUsageOverTimeChart",
-  filamentUsageByDayChart: "#filamentUsageByDayChart",
-  printCompletionByDayChart: "#printCompletionByDay",
-  environmentalHistory: "#environmentalHistory",
+  hourlyTotalTemperatureChart: '#hourlyTotalTemperatureChart',
+  weeklyUtilisationPerDayHeatMap: '#weeklyUtilisationPerDayHeatMap',
+  currentStatusChart: '#currentStatusChart',
+  currentUtilisationChart: '#currentUtilisation',
+  filamentUsageOverTimeChart: '#filamentUsageOverTimeChart',
+  filamentUsageByDayChart: '#filamentUsageByDayChart',
+  printCompletionByDayChart: '#printCompletionByDay',
+  environmentalHistory: '#environmentalHistory',
 };
 let environmentDataChart,
   hourlyTotalTemperatureChart,
@@ -35,13 +35,13 @@ async function renderChart(elementId, options) {
 
     return chartElement;
   } else {
-    console.debug("chart element", elementId, "not found");
+    console.debug('chart element', elementId, 'not found');
   }
 }
 
 function updateChartSeries(chartElement, data) {
   if (!chartElement) {
-    console.debug("chartelement was not found but data was pushed");
+    console.debug('chartelement was not found but data was pushed');
     return;
   }
   if (!!data) {
@@ -105,8 +105,7 @@ export class ChartsManager {
    * @param labels analyzed labels
    */
   static async renderEnvironmentDataChart(seriesData, labels) {
-    const environmentalHistoryChartOptions =
-      dashboardOptions.environmentalDataChartOptions;
+    const environmentalHistoryChartOptions = dashboardOptions.environmentalDataChartOptions;
     environmentalHistoryChartOptions.yaxis = labels;
     environmentDataChart = await renderChart(
       chartIds.environmentalHistory,

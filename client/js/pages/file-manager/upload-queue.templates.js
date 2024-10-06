@@ -1,4 +1,4 @@
-import Calc from "../../utils/calc";
+import Calc from '../../utils/calc';
 
 export const getFileQueueRow = (file) => {
   return `
@@ -20,8 +20,8 @@ export const getFileQueueRow = (file) => {
 };
 
 export const getFileRowID = (record) => {
-  return `${record.name.replace(/[^a-zA-Z0-9 ]/g, "")}-${record.printer.replace(
+  return `${record.name.replace(/[^a-zA-Z0-9 ]/g, '')}-${record.printer.replace(
     /[^a-zA-Z0-9 ]/g,
-    ""
+    ''
   )}`;
 };

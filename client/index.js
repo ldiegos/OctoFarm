@@ -3,7 +3,5 @@
  * @type {{returnOctoFarmUIPath: exports.returnOctoFarmUIPath}}
  */
 module.exports = {
-  returnOctoFarmUIPath: () => {
-
-  }
-}
+  returnOctoFarmUIPath: () => {},
+};

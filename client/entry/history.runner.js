@@ -21,24 +21,24 @@ let timelapseCount;
 let snapshotCount;
 let thumbnailCount;
 
-const timelapseButton = document.getElementById("timelapseGallery")
-const snapshotsButton = document.getElementById("snapshotGallery")
-const thumbnailButton = document.getElementById("thumbnailGallery")
+const timelapseButton = document.getElementById('timelapseGallery');
+const snapshotsButton = document.getElementById('snapshotGallery');
+const thumbnailButton = document.getElementById('thumbnailGallery');
 
 // Setup history listeners
 timelapseButton.addEventListener('click', () => {
-  let gallery = "";
-  const galleryItemsElement = document.getElementById("galleryItems")
+  let gallery = '';
+  const galleryItemsElement = document.getElementById('galleryItems');
 
   thumbnailCount.forEach((history) => {
-    let days_between_text = ""
-    const days_between_count = days_between(history.endDate, new Date())
-    if(days_between_count <= 0){
-      days_between_text = "today!";
-    }else if(days_between_count > 365){
-      days_between_text = (days_between_count / 365).toFixed(0) + " years ago";
-    }else{
-      days_between_text = days_between_count + " days ago";
+    let days_between_text = '';
+    const days_between_count = days_between(history.endDate, new Date());
+    if (days_between_count <= 0) {
+      days_between_text = 'today!';
+    } else if (days_between_count > 365) {
+      days_between_text = (days_between_count / 365).toFixed(0) + ' years ago';
+    } else {
+      days_between_text = days_between_count + ' days ago';
     }
     gallery += `
       <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
@@ -52,24 +52,24 @@ timelapseButton.addEventListener('click', () => {
           </div>
         </div>
       </div>
-    `
-  })
+    `;
+  });
   galleryItemsElement.innerHTML = gallery;
-})
+});
 
 snapshotsButton.addEventListener('click', () => {
-  let gallery = "";
-  const galleryItemsElement = document.getElementById("galleryItems")
+  let gallery = '';
+  const galleryItemsElement = document.getElementById('galleryItems');
 
   thumbnailCount.forEach((history) => {
-    let days_between_text = ""
-    const days_between_count = days_between(history.endDate, new Date())
-    if(days_between_count <= 0){
-      days_between_text = "today!";
-    }else if(days_between_count > 365){
-      days_between_text = (days_between_count / 365).toFixed(0) + " years ago";
-    }else{
-      days_between_text = days_between_count + " days ago";
+    let days_between_text = '';
+    const days_between_count = days_between(history.endDate, new Date());
+    if (days_between_count <= 0) {
+      days_between_text = 'today!';
+    } else if (days_between_count > 365) {
+      days_between_text = (days_between_count / 365).toFixed(0) + ' years ago';
+    } else {
+      days_between_text = days_between_count + ' days ago';
     }
     gallery += `
       <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
@@ -81,13 +81,12 @@ snapshotsButton.addEventListener('click', () => {
           </div>
         </div>
       </div>
-    `
-  })
+    `;
+  });
   galleryItemsElement.innerHTML = gallery;
-})
+});
 
 function days_between(date1, date2) {
-
   // The number of milliseconds in one day
   const ONE_DAY = 1000 * 60 * 60 * 24;
 
@@ -96,23 +95,21 @@ function days_between(date1, date2) {
 
   // Convert back to days and return
   return Math.round(differenceMs / ONE_DAY);
-
 }
 
-
 thumbnailButton.addEventListener('click', () => {
-  let gallery = "";
-  const galleryItemsElement = document.getElementById("galleryItems")
+  let gallery = '';
+  const galleryItemsElement = document.getElementById('galleryItems');
 
   thumbnailCount.forEach((history) => {
-    let days_between_text = ""
-    const days_between_count = days_between(history.endDate, new Date())
-    if(days_between_count <= 0){
-      days_between_text = "today!";
-    }else if(days_between_count > 365){
-      days_between_text = (days_between_count / 365).toFixed(0) + " years ago";
-    }else{
-      days_between_text = days_between_count + " days ago";
+    let days_between_text = '';
+    const days_between_count = days_between(history.endDate, new Date());
+    if (days_between_count <= 0) {
+      days_between_text = 'today!';
+    } else if (days_between_count > 365) {
+      days_between_text = (days_between_count / 365).toFixed(0) + ' years ago';
+    } else {
+      days_between_text = days_between_count + ' days ago';
     }
     gallery += `
       <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
@@ -124,10 +121,10 @@ thumbnailButton.addEventListener('click', () => {
           </div>
         </div>
       </div>
-    `
-  })
+    `;
+  });
   galleryItemsElement.innerHTML = gallery;
-})
+});
 
 document.getElementById('historyTable').addEventListener('click', (e) => {
   // Remove from UI
@@ -1125,56 +1122,48 @@ class History {
     this.hideGalleryLabels(history);
   }
 
-  static hideGalleryLabels(history){
+  static hideGalleryLabels(history) {
     timelapseCount = history.filter((record) => {
       return !!record?.timelapse && record.timelapse.length > 0;
-    })
+    });
     snapshotCount = history.filter((record) => {
       return !!record?.snapshot && record.snapshot.length > 0;
-    })
+    });
     thumbnailCount = history.filter((record) => {
       return !!record?.thumbnail && record.thumbnail.length > 0;
-    })
+    });
 
-
-    if(timelapseCount.length > 0){
-      timelapseButton.classList.remove("d-none")
-    }else{
-      timelapseButton.classList.add("d-none")
+    if (timelapseCount.length > 0) {
+      timelapseButton.classList.remove('d-none');
+    } else {
+      timelapseButton.classList.add('d-none');
     }
 
-    if(snapshotCount.length > 0){
-      snapshotsButton.classList.remove("d-none")
-    }else{
-      snapshotsButton.classList.add("d-none")
+    if (snapshotCount.length > 0) {
+      snapshotsButton.classList.remove('d-none');
+    } else {
+      snapshotsButton.classList.add('d-none');
     }
 
-    if(thumbnailCount.length > 0){
-      thumbnailButton.classList.remove("d-none")
-    }else{
-      thumbnailButton.classList.add("d-none")
+    if (thumbnailCount.length > 0) {
+      thumbnailButton.classList.remove('d-none');
+    } else {
+      thumbnailButton.classList.add('d-none');
     }
 
-    const noGalleryLabel = document.getElementById("noGalleryLabel");
-    if(timelapseCount.length === 0 && snapshotCount.length === 0 && thumbnailCount.length === 0){
-      noGalleryLabel.classList.remove("d-none")
-    }else{
-      noGalleryLabel.classList.add("d-none")
+    const noGalleryLabel = document.getElementById('noGalleryLabel');
+    if (timelapseCount.length === 0 && snapshotCount.length === 0 && thumbnailCount.length === 0) {
+      noGalleryLabel.classList.remove('d-none');
+    } else {
+      noGalleryLabel.classList.add('d-none');
     }
   }
 
-  static async loadTimelapseGallery(){
+  static async loadTimelapseGallery() {}
 
-  }
+  static async loadSnapshotGallery() {}
 
-  static async loadSnapshotGallery(){
-
-  }
-
-
-  static async loadThumbnailsGallery(){
-
-  }
+  static async loadThumbnailsGallery() {}
 
   static async edit(e) {
     if (e.target.classList.contains('historyEdit')) {
@@ -1296,13 +1285,15 @@ class History {
       if (!!current?.spools) {
         for (const spool of current.spools) {
           const sp = Object.keys(spool)[0];
-            toolsArray.push(sp);
-            viewTable.insertAdjacentHTML(
-                'beforeend',
-                `
+          toolsArray.push(sp);
+          viewTable.insertAdjacentHTML(
+            'beforeend',
+            `
           <tr>
               <td>
-              ${!!spool[sp]?.toolName ? spool[sp]?.toolName : "0"}: ${!!spool[sp]?.spoolName ? spool[sp].spoolName : "No Spool"}
+              ${!!spool[sp]?.toolName ? spool[sp]?.toolName : '0'}: ${
+              !!spool[sp]?.spoolName ? spool[sp].spoolName : 'No Spool'
+            }
               </td>
               <td>
               ${!!spool[sp]?.volume ? spool[sp]?.volume : 0}m3
@@ -1319,8 +1310,7 @@ class History {
               </tr>
           </tr>
         `
-            );
-
+          );
         }
       } else {
         toolsArray.push(0);
@@ -1374,7 +1364,7 @@ class History {
     }
   }
 
-  static async gallery(e){
+  static async gallery(e) {
     if (e.target.classList.contains('historyGallery')) {
       // Grab elements
       const printerName = document.getElementById('printerGalleryName');
@@ -1402,22 +1392,22 @@ class History {
       let active = 'active';
 
       if (
-          typeof current.snapshot !== 'undefined' &&
-          current.snapshot !== '' &&
-          current.snapshot !== null
+        typeof current.snapshot !== 'undefined' &&
+        current.snapshot !== '' &&
+        current.snapshot !== null
       ) {
         thumbnailIndicators.insertAdjacentHTML(
-            'beforeend',
-            `
+          'beforeend',
+          `
            <li data-target="#carouselExampleIndicators" data-slide-to="${counter}" class="${active}"></li>
         `
         );
         thumbnail.insertAdjacentHTML(
-            'beforeend',
-            `
+          'beforeend',
+          `
               <div class="carousel-item ${active} text-center" style="height:200px; background-image: url('${encodeURI(
-                current.snapshot
-            )}')">
+            current.snapshot
+          )}')">
                   <div class="carousel-caption d-none d-md-block">
                     <h6>Camera Snapshot</h6>
                   </div>
@@ -1430,22 +1420,22 @@ class History {
       }
 
       if (
-          typeof current.thumbnail !== 'undefined' &&
-          current.thumbnail != null &&
-          current.thumbnail !== ''
+        typeof current.thumbnail !== 'undefined' &&
+        current.thumbnail != null &&
+        current.thumbnail !== ''
       ) {
         thumbnailIndicators.insertAdjacentHTML(
-            'beforeend',
-            `
+          'beforeend',
+          `
            <li data-target="#carouselExampleIndicators" data-slide-to="${counter}" class="${active}"></li>
         `
         );
         thumbnail.insertAdjacentHTML(
-            'beforeend',
-            `
+          'beforeend',
+          `
               <div class="carousel-item ${active}  text-center" style="height:200px; background-image: url('${encodeURI(
-                current.thumbnail
-            )}')">
+            current.thumbnail
+          )}')">
                   <div class="carousel-caption d-none d-md-block">
                     <h6>Slicer Thumbnail</h6>
                   </div>
@@ -1457,19 +1447,19 @@ class History {
         counter = counter + 1;
       }
       if (
-          typeof current.timelapse !== 'undefined' &&
-          current.timelapse !== '' &&
-          current.timelapse !== null
+        typeof current.timelapse !== 'undefined' &&
+        current.timelapse !== '' &&
+        current.timelapse !== null
       ) {
         thumbnailIndicators.insertAdjacentHTML(
-            'beforeend',
-            `
+          'beforeend',
+          `
            <li data-target="#carouselExampleIndicators" data-slide-to="${counter}" class="${active}"></li>
         `
         );
         thumbnail.insertAdjacentHTML(
-            'beforeend',
-            `
+          'beforeend',
+          `
             <div class="carousel-item ${active} text-center" style="height:200px;">
                 <video autobuffer="autobuffer" autoplay="autoplay" loop="loop" controls="controls" style="height:350px;">
                     <source src='${encodeURI(current.timelapse)}'>
@@ -1487,7 +1477,6 @@ class History {
       } else {
         document.getElementById('galleryElements').style.display = 'none';
       }
-
     }
   }
 

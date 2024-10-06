@@ -1,10 +1,10 @@
-import Noty from "noty";
+import Noty from 'noty';
 
-const printerSettingsModal = document.getElementById("printerSettingsModal");
-const printerManagerModal = document.getElementById("printerManagerModal");
-const printerLogsModal = document.getElementById("printerLogsModal");
-const printerStatisticsModal = document.getElementById("printerStatistics");
-const printerSelectModal = document.getElementById("printerSelectModal");
+const printerSettingsModal = document.getElementById('printerSettingsModal');
+const printerManagerModal = document.getElementById('printerManagerModal');
+const printerLogsModal = document.getElementById('printerLogsModal');
+const printerStatisticsModal = document.getElementById('printerStatistics');
+const printerSelectModal = document.getElementById('printerSelectModal');
 const currentModals = [
   printerSettingsModal,
   printerManagerModal,
@@ -20,28 +20,28 @@ export default class UI {
   };
   //Colour function
   static getColour(state) {
-    if (state === "Operational") {
-      return { name: "secondary", hex: "#262626", category: "Idle" };
-    } else if (state === "Paused") {
-      return { name: "warning", hex: "#583c0e", category: "Idle" };
-    } else if (state === "Printing") {
-      return { name: "warning", hex: "#583c0e", category: "Active" };
-    } else if (state === "Pausing") {
-      return { name: "warning", hex: "#583c0e", category: "Active" };
-    } else if (state === "Cancelling") {
-      return { name: "warning", hex: "#583c0e", category: "Active" };
-    } else if (state === "Error") {
-      return { name: "danger", hex: "#2e0905", category: "Idle" };
-    } else if (state === "Offline") {
-      return { name: "danger", hex: "#2e0905", category: "Offline" };
-    } else if (state === "Searching...") {
-      return { name: "danger", hex: "#2e0905", category: "Idle" };
-    } else if (state === "Closed") {
-      return { name: "danger", hex: "#2e0905", category: "Closed" };
-    } else if (state === "Complete") {
-      return { name: "success", hex: "#00330e", category: "Complete" };
+    if (state === 'Operational') {
+      return { name: 'secondary', hex: '#262626', category: 'Idle' };
+    } else if (state === 'Paused') {
+      return { name: 'warning', hex: '#583c0e', category: 'Idle' };
+    } else if (state === 'Printing') {
+      return { name: 'warning', hex: '#583c0e', category: 'Active' };
+    } else if (state === 'Pausing') {
+      return { name: 'warning', hex: '#583c0e', category: 'Active' };
+    } else if (state === 'Cancelling') {
+      return { name: 'warning', hex: '#583c0e', category: 'Active' };
+    } else if (state === 'Error') {
+      return { name: 'danger', hex: '#2e0905', category: 'Idle' };
+    } else if (state === 'Offline') {
+      return { name: 'danger', hex: '#2e0905', category: 'Offline' };
+    } else if (state === 'Searching...') {
+      return { name: 'danger', hex: '#2e0905', category: 'Idle' };
+    } else if (state === 'Closed') {
+      return { name: 'danger', hex: '#2e0905', category: 'Closed' };
+    } else if (state === 'Complete') {
+      return { name: 'success', hex: '#00330e', category: 'Complete' };
     } else {
-      return { name: "danger", hex: "#2e0905", category: "Offline" };
+      return { name: 'danger', hex: '#2e0905', category: 'Offline' };
     }
   }
   //Create message
@@ -55,13 +55,13 @@ export default class UI {
       </button>
     </div>
     `;
-    message.insertAdjacentHTML("beforeend", row);
+    message.insertAdjacentHTML('beforeend', row);
   }
 
   //Create toast notification
   static createAlert(type, message, delay, click) {
     if (click != undefined) {
-      click = ["click"];
+      click = ['click'];
     } else {
       click = [];
     }
@@ -69,10 +69,10 @@ export default class UI {
     Noty.setMaxVisible(50);
     let alert = new Noty({
       type: type,
-      theme: "bootstrap-v4",
+      theme: 'bootstrap-v4',
       closeWith: click,
       timeout: delay,
-      layout: "bottomRight",
+      layout: 'bottomRight',
       text: message,
     });
     alert.show();
@@ -80,7 +80,7 @@ export default class UI {
   }
 
   static doesElementNeedUpdating(value, element, meta) {
-    if(!value || !element || !meta){
+    if (!value || !element || !meta) {
       return;
     }
     //Quick check to see if the UI value differs, if so update.
@@ -92,22 +92,22 @@ export default class UI {
   }
 
   static clearSelect(elementValue) {
-    let inputBoxes = document.querySelectorAll("*[id^=" + elementValue + "]");
+    let inputBoxes = document.querySelectorAll('*[id^=' + elementValue + ']');
     inputBoxes.forEach((input) => {
-      input.value = "";
+      input.value = '';
     });
   }
 
   static addSelectListeners(elementValue) {
-    let inputBoxes = document.querySelectorAll("*[id^=" + elementValue + "]");
+    let inputBoxes = document.querySelectorAll('*[id^=' + elementValue + ']');
     inputBoxes.forEach((input) => {
-      if (input.localName === "input") {
-        input.addEventListener("focus", (e) => {
+      if (input.localName === 'input') {
+        input.addEventListener('focus', (e) => {
           if (input.value !== input.placeholder) {
             input.value = input.placeholder;
           }
         });
-        input.addEventListener("focusout", (e) => {
+        input.addEventListener('focusout', (e) => {
           if (input.value !== input.placeholder) {
             input.placeholder = input.value;
           }
@@ -121,30 +121,25 @@ export default class UI {
   }
 
   static removeLoaderFromElementInnerHTML(element) {
-    if (!!element && element.innerHTML.includes("spinner")) {
-      element.innerHTML = element.innerHTML.replace(
-        UI.returnSpinnerTemplate(),
-        ""
-      );
+    if (!!element && element.innerHTML.includes('spinner')) {
+      element.innerHTML = element.innerHTML.replace(UI.returnSpinnerTemplate(), '');
     }
   }
   static addLoaderToElementsInnerHTML(element) {
-    if (!element.innerHTML.includes("spinner")) {
+    if (!element.innerHTML.includes('spinner')) {
       element.innerHTML += UI.returnSpinnerTemplate();
     }
   }
   static checkIfAnyModalShown() {
     const modalArray = currentModals.map((modal) => {
-      return modal.classList.contains("show");
+      return modal.classList.contains('show');
     });
     return modalArray.includes(true);
   }
   static checkIfSpecificModalShown(modalToCheck) {
-    const currentModal = currentModals.filter(
-      (modal) => modal.id === modalToCheck
-    );
+    const currentModal = currentModals.filter((modal) => modal.id === modalToCheck);
     if (currentModal[0]) {
-      return currentModal[0].classList.contains("show");
+      return currentModal[0].classList.contains('show');
     } else {
       return false;
     }
@@ -171,7 +166,7 @@ export default class UI {
 
   static blankElementValue(elements) {
     elements.forEach((element) => {
-      element.value = "";
+      element.value = '';
     });
   }
 
@@ -187,9 +182,9 @@ export default class UI {
   }
 
   static generateTime(seconds) {
-    let string = "";
+    let string = '';
     if (seconds === undefined || isNaN(seconds) || seconds === null) {
-      string = "No Time Estimate";
+      string = 'No Time Estimate';
     } else {
       const days = Math.floor(seconds / (3600 * 24));
 
@@ -205,22 +200,22 @@ export default class UI {
       string = `${days}d, ${hrs}h, ${mnts}m, ${seconds}s`;
 
       if (mnts == 0) {
-        if (string.includes("0m")) {
-          string = string.replace(" 0m,", "");
+        if (string.includes('0m')) {
+          string = string.replace(' 0m,', '');
         }
       }
       if (hrs == 0) {
-        if (string.includes("0h")) {
-          string = string.replace(" 0h,", "");
+        if (string.includes('0h')) {
+          string = string.replace(' 0h,', '');
         }
       }
       if (days == 0) {
-        if (string.includes("0d")) {
-          string = string.replace("0d,", "");
+        if (string.includes('0d')) {
+          string = string.replace('0d,', '');
         }
       }
       if (mnts == 0 && hrs == 0 && days == 0 && seconds == 0) {
-        string = string.replace("0s", "Done");
+        string = string.replace('0s', 'Done');
       }
     }
 
@@ -237,9 +232,9 @@ export default class UI {
 
   static generateMilisecondsTime(miliseconds) {
     let seconds = miliseconds / 1000;
-    let string = "";
+    let string = '';
     if (!seconds || isNaN(seconds)) {
-      string = "No Interval";
+      string = 'No Interval';
     } else {
       const days = Math.floor(seconds / (3600 * 24));
 
@@ -255,37 +250,37 @@ export default class UI {
       string = `${days}d, ${hrs}h, ${mnts}m, ${seconds}s`;
 
       if (mnts === 0) {
-        if (string.includes("0m")) {
-          string = string.replace(" 0m,", "");
+        if (string.includes('0m')) {
+          string = string.replace(' 0m,', '');
         }
       }
       if (hrs === 0) {
-        if (string.includes("0h")) {
-          string = string.replace(" 0h,", "");
+        if (string.includes('0h')) {
+          string = string.replace(' 0h,', '');
         }
       }
       if (days === 0) {
-        if (string.includes("0d")) {
-          string = string.replace("0d,", "");
+        if (string.includes('0d')) {
+          string = string.replace('0d,', '');
         }
       }
       if (seconds === 0) {
-        string = string.replace(", 0s", "");
+        string = string.replace(', 0s', '');
       }
       if (mnts === 0 && hrs === 0 && days === 0 && seconds === 0) {
-        string = string.replace("0s", miliseconds + " ms");
+        string = string.replace('0s', miliseconds + ' ms');
       }
       if (!miliseconds) {
-        string = "No Interval";
+        string = 'No Interval';
       }
     }
     return string;
   }
 
   static isPrinterDisabled(e) {
-    if (e.target.innerHTML.includes("wheelchair")) {
+    if (e.target.innerHTML.includes('wheelchair')) {
       return false;
-    } else if (e.target.innerHTML.includes("running")) {
+    } else if (e.target.innerHTML.includes('running')) {
       return true;
     }
   }
@@ -296,61 +291,61 @@ export default class UI {
     }
   }
 
-  static addClassIfDoesNotExist(element, className){
+  static addClassIfDoesNotExist(element, className) {
     if (!element.classList.contains(className)) {
       element.classList.add(className);
     }
   }
 
   static removeDisplayNoneFromElement(element) {
-    if (element.classList.contains("d-none")) {
-      element.classList.remove("d-none");
+    if (element.classList.contains('d-none')) {
+      element.classList.remove('d-none');
     }
   }
 
   static addDisplayNoneToElement(element) {
-    if (!element.classList.contains("d-none")) {
-      element.classList.add("d-none");
+    if (!element.classList.contains('d-none')) {
+      element.classList.add('d-none');
     }
   }
 
   static removeFaSpinFromElement(element) {
-    if (element.classList.contains("fa-spin")) {
-      element.classList.remove("fa-spin");
+    if (element.classList.contains('fa-spin')) {
+      element.classList.remove('fa-spin');
     }
   }
 
   static addFaSpinToElement(element) {
-    if (!element.classList.contains("fa-spin")) {
-      element.classList.add("fa-spin");
+    if (!element.classList.contains('fa-spin')) {
+      element.classList.add('fa-spin');
     }
   }
 
   static addNotYetToElement(element) {
-    if (!element.classList.contains("notyet")) {
-      element.classList.add("notyet");
+    if (!element.classList.contains('notyet')) {
+      element.classList.add('notyet');
     }
   }
 
   static removeNotYetFromElement(element) {
-    if (element.classList.contains("notyet")) {
-      element.classList.remove("notyet");
+    if (element.classList.contains('notyet')) {
+      element.classList.remove('notyet');
     }
   }
 
   static togglePrinterDisableState(e) {
-    if (e.target.innerHTML.includes("running")) {
+    if (e.target.innerHTML.includes('running')) {
       e.target.innerHTML = '<i class="fas fa-wheelchair"></i> Disable';
-      e.target.title = "Printer is Disabled, click to enable";
-    } else if (e.target.innerHTML.includes("wheelchair")) {
+      e.target.title = 'Printer is Disabled, click to enable';
+    } else if (e.target.innerHTML.includes('wheelchair')) {
       e.target.innerHTML = '<i class="fas fa-running text-success"></i> Enable';
-      e.target.title = "Printer is Enabled, click to disable";
+      e.target.title = 'Printer is Enabled, click to disable';
     }
   }
 
   static getValueOrPlaceHolder(element) {
     if (!!element) {
-      if (element.value === "") {
+      if (element.value === '') {
         return element.placeholder;
       } else {
         return element.value;
@@ -362,18 +357,18 @@ export default class UI {
 
   static returnProgressColour(percent, reverse) {
     if (percent < 45) {
-      return reverse ? "bg-danger" : "bg-success";
+      return reverse ? 'bg-danger' : 'bg-success';
     } else if (percent < 75) {
-      return "bg-warning";
+      return 'bg-warning';
     } else {
-      return reverse ? "bg-success" : "bg-danger";
+      return reverse ? 'bg-success' : 'bg-danger';
     }
   }
 
   static convertValueToTemplate(key, value) {
     const VALUE_NAME = UI.camelCaseToWords(key);
     const ELEMENT_ID = `opBulk-${key}`;
-    if (typeof value === "string") {
+    if (typeof value === 'string') {
       return `
         <div class="input-group mb-3 col-3">
           <div class="input-group-prepend">
@@ -383,7 +378,7 @@ export default class UI {
         </div>
       `;
     }
-    if (typeof value === "number") {
+    if (typeof value === 'number') {
       return `
         <div class="input-group mb-3 col-3">
           <div class="input-group-prepend">
@@ -394,8 +389,8 @@ export default class UI {
       `;
     }
 
-    if (typeof value === "boolean") {
-      const checked = value ? "checked='true'" : "";
+    if (typeof value === 'boolean') {
+      const checked = value ? "checked='true'" : '';
       return `
         <div class="col-4">
           <form class="was-validated">
@@ -420,7 +415,7 @@ export default class UI {
       .map(function (x) {
         return x[0].toUpperCase() + x.substr(1).toLowerCase();
       })
-      .join(" ");
+      .join(' ');
   }
 
   static captureScrollPosition(element) {

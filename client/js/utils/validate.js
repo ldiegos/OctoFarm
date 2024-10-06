@@ -3,34 +3,28 @@ export default class Validate {
   static URL(u) {
     let elm;
     if (!elm) {
-      elm = document.createElement("input");
-      elm.setAttribute("type", "url");
+      elm = document.createElement('input');
+      elm.setAttribute('type', 'url');
     }
     elm.value = u;
     return elm.validity.valid;
   }
   static IP(ipaddress) {
     return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
-        ipaddress
+      ipaddress
     );
   }
   static JSON(file) {
     return /^[\],:{}\s]*$/.test(
-        file
-            .replace(/\\["\\\/bfnrtu]/g, "@")
-            .replace(
-                /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
-                "]"
-            )
-            .replace(/(?:^|:|,)(?:\s*\[)+/g, "")
+      file
+        .replace(/\\["\\\/bfnrtu]/g, '@')
+        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
+        .replace(/(?:^|:|,)(?:\s*\[)+/g, '')
     );
   }
   static getName(printer) {
-    if (typeof printer.settingsAppearance != "undefined") {
-      if (
-        printer.settingsAppearance.name === "" ||
-        printer.settingsAppearance.name === null
-      ) {
+    if (typeof printer.settingsAppearance != 'undefined') {
+      if (printer.settingsAppearance.name === '' || printer.settingsAppearance.name === null) {
         return printer.printerURL;
       } else {
         return printer.settingsAppearance.name;
@@ -40,10 +34,10 @@ export default class Validate {
     }
   }
   static stripHTML(text) {
-    var tmp = document.createElement("DIV");
+    var tmp = document.createElement('DIV');
     tmp.innerHTML = text;
-    var res = tmp.textContent || tmp.innerText || "";
-    res.replace("\u200B", ""); // zero width space
+    var res = tmp.textContent || tmp.innerText || '';
+    res.replace('\u200B', ''); // zero width space
     res = res.trim();
     return res;
   }

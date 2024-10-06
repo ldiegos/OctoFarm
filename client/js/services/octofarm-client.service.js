@@ -1,7 +1,7 @@
-import axios from "axios";
-import { ApplicationError } from "../exceptions/application-error.handler";
-import { HTTPError } from "../exceptions/octofarm-api.exceptions";
-import { ClientErrors } from "../exceptions/octofarm-client.exceptions";
+import axios from 'axios';
+import { ApplicationError } from '../exceptions/application-error.handler';
+import { HTTPError } from '../exceptions/octofarm-api.exceptions';
+import { ClientErrors } from '../exceptions/octofarm-client.exceptions';
 
 //REFACTOR move out to utility file
 const prettyPrintStatusError = (errorString) => {
@@ -10,9 +10,7 @@ const prettyPrintStatusError = (errorString) => {
   let prettyString = `<br>###${name}###<br>`;
 
   for (const key in errors) {
-    prettyString += `<br>#${key.toLocaleUpperCase()}#<br> ${
-      errors[key].message
-    } <br>`;
+    prettyString += `<br>#${key.toLocaleUpperCase()}#<br> ${errors[key].message} <br>`;
   }
 
   return prettyString;
@@ -83,18 +81,17 @@ axios.interceptors.response.use(
 // REFACTOR: this could end up getting big, consider splitting it.
 // Would go by page, each page could get it's own extends class for pre-defined routes building on the CRUD actions available.
 export default class OctoFarmClient {
-  static base = "/api";
-  static printerRoute = "/printers";
-  static disablePrinterRoute = this.printerRoute + "/disable";
-  static enablePrinterRoute = this.printerRoute + "/enable";
-  static generatePrinterNameRoute =
-    this.printerRoute + "/generate_printer_name";
-  static updateUserActionsLogRoute = this.printerRoute + "/logUserPrintAction";
-  static updateActiveUserRoute = this.printerRoute + "/updateActiveUser";
-  static printerStepChangeRoute = this.printerRoute + "/stepChange";
-  static forceReconnectRoute = this.printerRoute + "/forceReconnect";
-  static serverSettingsRoute = "/settings/server";
-  static clientSettingsRoute = "/settings/client";
+  static base = '/api';
+  static printerRoute = '/printers';
+  static disablePrinterRoute = this.printerRoute + '/disable';
+  static enablePrinterRoute = this.printerRoute + '/enable';
+  static generatePrinterNameRoute = this.printerRoute + '/generate_printer_name';
+  static updateUserActionsLogRoute = this.printerRoute + '/logUserPrintAction';
+  static updateActiveUserRoute = this.printerRoute + '/updateActiveUser';
+  static printerStepChangeRoute = this.printerRoute + '/stepChange';
+  static forceReconnectRoute = this.printerRoute + '/forceReconnect';
+  static serverSettingsRoute = '/settings/server';
+  static clientSettingsRoute = '/settings/client';
   static filamentRoute = `/filament`;
   static filamentStatistics = `${this.filamentRoute}/get/statistics`;
   static filamentProfiles = `${this.filamentRoute}/get/profile`;
@@ -142,11 +139,11 @@ export default class OctoFarmClient {
     let path = `${this.printerRoute}/printerInfo`;
 
     if (disabled) {
-      path += "?disabled=true";
+      path += '?disabled=true';
     }
 
     if (showFullList) {
-      path += "?fullList=true";
+      path += '?fullList=true';
     }
 
     return this.post(path);
@@ -186,11 +183,11 @@ export default class OctoFarmClient {
   }
 
   static async getHistoryStatistics() {
-    return this.get("history/statisticsData");
+    return this.get('history/statisticsData');
   }
 
   static async getClientSettings() {
-    return this.get("settings/client/get");
+    return this.get('settings/client/get');
   }
 
   static async getServerSettings() {
@@ -202,7 +199,7 @@ export default class OctoFarmClient {
   }
 
   static async setPrinterSteps(id, newSteps) {
-    return this.post("printers/stepChange", {
+    return this.post('printers/stepChange', {
       printer: id,
       newSteps,
     });
@@ -250,7 +247,7 @@ export default class OctoFarmClient {
   }
 
   static async getCustomGcode(id) {
-    let url = "settings/customGcode";
+    let url = 'settings/customGcode';
     if (id) {
       url = `${url}/${id}`;
     }
@@ -262,7 +259,7 @@ export default class OctoFarmClient {
   }
 
   static getCurrentOpState() {
-    return this.get("client/currentOpSorting");
+    return this.get('client/currentOpSorting');
   }
 
   static getHealthChecks() {
@@ -285,14 +282,14 @@ export default class OctoFarmClient {
   }
 
   static updateCurrentOpState({ iterie, order }) {
-    return this.post("client/currentOpSorting", { iterie, order });
+    return this.post('client/currentOpSorting', { iterie, order });
   }
 
   static async updateActiveControlUser(id) {
     try {
       await this.patch(`${this.updateActiveUserRoute}/${id}`);
     } catch (e) {
-      console.error("Unable to update active control user!", e.toString());
+      console.error('Unable to update active control user!', e.toString());
     }
   }
 
@@ -300,7 +297,7 @@ export default class OctoFarmClient {
     try {
       await this.post(`${this.updateUserActionsLogRoute}/${id}`, body);
     } catch (e) {
-      console.error("Unable to update user actions log!", e.toString());
+      console.error('Unable to update user actions log!', e.toString());
     }
   }
 

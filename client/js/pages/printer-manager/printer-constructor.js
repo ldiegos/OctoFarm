@@ -1,6 +1,6 @@
-import Validate from "../../utils/validate";
-import UI from "../../utils/ui";
-import OctoFarmClient from "../../services/octofarm-client.service.js";
+import Validate from '../../utils/validate';
+import UI from '../../utils/ui';
+import OctoFarmClient from '../../services/octofarm-client.service.js';
 
 let newPrintersIndex = 0;
 
@@ -9,9 +9,9 @@ let newPrintersIndex = 0;
 class Printer {
   constructor(printerURL, camURL, apikey, group, name) {
     this.settingsAppearance = {
-      color: "default",
+      color: 'default',
       colorTransparent: false,
-      defaultLanguage: "_default",
+      defaultLanguage: '_default',
       name,
       showFahrenheitAlso: false,
     };
@@ -29,15 +29,13 @@ export class PrintersManagement {
 
   static addPrinter(newPrinter) {
     // Insert Blank Row at top of printer list
-    if (
-      document.getElementById("printerNewTable").classList.contains("d-none")
-    ) {
-      document.getElementById("printerNewTable").classList.remove("d-none");
+    if (document.getElementById('printerNewTable').classList.contains('d-none')) {
+      document.getElementById('printerNewTable').classList.remove('d-none');
     }
 
-    if (typeof newPrinter !== "undefined") {
-      document.getElementById("printerNewList").insertAdjacentHTML(
-        "beforebegin",
+    if (typeof newPrinter !== 'undefined') {
+      document.getElementById('printerNewList').insertAdjacentHTML(
+        'beforebegin',
         `
    <tr id="newPrinterCard-${newPrintersIndex}">
         <td><div class="mb-0">
@@ -66,8 +64,8 @@ export class PrintersManagement {
   `
       );
     } else {
-      document.getElementById("printerNewList").insertAdjacentHTML(
-        "beforebegin",
+      document.getElementById('printerNewList').insertAdjacentHTML(
+        'beforebegin',
         `
         <tr id="newPrinterCard-${newPrintersIndex}">
         <td><div class="mb-0">
@@ -102,22 +100,18 @@ export class PrintersManagement {
       );
     }
     let currentIndex = JSON.parse(JSON.stringify(newPrintersIndex));
-    document
-      .getElementById(`delButton-${newPrintersIndex}`)
-      .addEventListener("click", (event) => {
-        UI.removeLine(
-          document.getElementById(`newPrinterCard-${currentIndex}`)
-        );
-        const table = document.getElementById("printerNewTable");
-        if (table.rows.length === 1) {
-          if (!table.classList.contains("d-none")) {
-            table.classList.add("d-none");
-          }
+    document.getElementById(`delButton-${newPrintersIndex}`).addEventListener('click', (event) => {
+      UI.removeLine(document.getElementById(`newPrinterCard-${currentIndex}`));
+      const table = document.getElementById('printerNewTable');
+      if (table.rows.length === 1) {
+        if (!table.classList.contains('d-none')) {
+          table.classList.add('d-none');
         }
-      });
+      }
+    });
     document
       .getElementById(`saveButton-${newPrintersIndex}`)
-      .addEventListener("click", async (event) => {
+      .addEventListener('click', async (event) => {
         await PrintersManagement.savePrinter(event.target);
       });
     newPrintersIndex++;
@@ -135,38 +129,38 @@ export class PrintersManagement {
         // Loop over import only importing printers with correct fields.
         for (let newPrinter of importPrinters) {
           const printer = {
-            printerURL: "Key not found",
-            cameraURL: "Key not found",
-            name: "Key not found",
-            group: "Key not found",
-            apikey: "Key not found",
+            printerURL: 'Key not found',
+            cameraURL: 'Key not found',
+            name: 'Key not found',
+            group: 'Key not found',
+            apikey: 'Key not found',
           };
-          if (typeof newPrinter.name !== "undefined") {
+          if (typeof newPrinter.name !== 'undefined') {
             printer.name = newPrinter.name;
           }
-          if (typeof newPrinter.printerURL !== "undefined") {
+          if (typeof newPrinter.printerURL !== 'undefined') {
             printer.printerURL = newPrinter.printerURL;
           }
-          if (typeof newPrinter.cameraURL !== "undefined") {
+          if (typeof newPrinter.cameraURL !== 'undefined') {
             printer.camURL = newPrinter.cameraURL;
           }
-          if (typeof newPrinter.group !== "undefined") {
+          if (typeof newPrinter.group !== 'undefined') {
             printer.group = newPrinter.group;
           }
-          if (typeof newPrinter.apikey !== "undefined") {
+          if (typeof newPrinter.apikey !== 'undefined') {
             printer.apikey = newPrinter.apikey;
           }
           await PrintersManagement.addPrinter(printer);
         }
         UI.createAlert(
-          "success",
-          "Successfully imported your printer list, Please check it over and save when ready.",
+          'success',
+          'Successfully imported your printer list, Please check it over and save when ready.',
           3000
         );
       } else {
         UI.createAlert(
-          "error",
-          "The file you have tried to upload contains json syntax errors.",
+          'error',
+          'The file you have tried to upload contains json syntax errors.',
           3000
         );
       }
@@ -175,42 +169,42 @@ export class PrintersManagement {
 
   static async deletePrinter(deletedPrinters) {
     const deletingAlert = UI.createAlert(
-      "warning",
+      'warning',
       `Deleting ${[...deletedPrinters]} from the farm...`,
       0
     );
     if (deletedPrinters.length > 0) {
-      const printersToRemove = await OctoFarmClient.post("printers/remove", {
+      const printersToRemove = await OctoFarmClient.post('printers/remove', {
         idList: deletedPrinters,
       });
       const { printersRemoved } = printersToRemove;
       deletingAlert.close();
       printersRemoved.forEach((printer) => {
         UI.createAlert(
-          "success",
+          'success',
           `Printer: ${printer.printerURL} has successfully been removed from the farm...`,
           1000,
-          "Clicked"
+          'Clicked'
         );
         const printerCard = document.getElementById(`printerCard-${printer.printerId}`);
-        if(!!printerCard){
-         printerCard.remove()
+        if (!!printerCard) {
+          printerCard.remove();
         }
       });
     } else {
       deletingAlert.close();
       UI.createAlert(
-        "error",
-        "To delete a printer... one must first select a printer.",
+        'error',
+        'To delete a printer... one must first select a printer.',
         3000,
-        "Clicked"
+        'Clicked'
       );
     }
   }
 
   static async savePrinter(event) {
     // Gather the printer data...
-    let newId = event.id.split("-");
+    let newId = event.id.split('-');
     newId = newId[1];
 
     // Grab new printer cells...
@@ -222,55 +216,53 @@ export class PrintersManagement {
 
     const errors = [];
     let printCheck = -1;
-    if (printerURL.value !== "") {
+    if (printerURL.value !== '') {
       const printerInfo = await OctoFarmClient.listPrinters();
       printCheck = _.findIndex(printerInfo, function (o) {
-        return (
-          JSON.stringify(o.printerURL) === JSON.stringify(printerURL.value)
-        );
+        return JSON.stringify(o.printerURL) === JSON.stringify(printerURL.value);
       });
     }
     // Check information is filled correctly...
     if (
-      printerURL.value === "" ||
+      printerURL.value === '' ||
       printCheck > -1 ||
-      printerAPIKEY.value === "" ||
-      printerName.value === "" ||
-      printerCamURL.value === "" ||
+      printerAPIKEY.value === '' ||
+      printerName.value === '' ||
+      printerCamURL.value === '' ||
       printerName.value.length > 50
     ) {
-      if (printerURL.value === "") {
+      if (printerURL.value === '') {
         errors.push({
-          type: "warning",
-          msg: "Please input your printers URL",
+          type: 'warning',
+          msg: 'Please input your printers URL',
         });
       }
-      if (printerAPIKEY.value === "") {
+      if (printerAPIKEY.value === '') {
         errors.push({
-          type: "warning",
-          msg: "Please input your printers API Key",
+          type: 'warning',
+          msg: 'Please input your printers API Key',
         });
       }
       if (printerName.value.length > 50) {
         errors.push({
-          type: "warning",
-          msg: "Printer names must be less than 50 characters",
+          type: 'warning',
+          msg: 'Printer names must be less than 50 characters',
         });
       }
       if (printCheck > -1) {
         errors.push({
-          type: "error",
+          type: 'error',
           msg: `Printer URL: ${printerURL.value} already exists on farm`,
         });
       }
     }
     if (errors.length > 0) {
       errors.forEach((error) => {
-        UI.createAlert(error.type, error.msg, 3000, "clicked");
+        UI.createAlert(error.type, error.msg, 3000, 'clicked');
       });
     } else {
       const saveButton = document.getElementById(`saveButton-${newId}`);
-      saveButton.innerHTML = "<i class=\"fas fa-spinner fa-spin\"></i>";
+      saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
       saveButton.disabled = true;
 
       const printer = new PrintersManagement(
@@ -280,24 +272,24 @@ export class PrintersManagement {
         printerGroup.value,
         printerName.value
       ).build();
-      const printersToAdd = await OctoFarmClient.post("printers/add", printer);
+      const printersToAdd = await OctoFarmClient.post('printers/add', printer);
       const { printersAdded } = printersToAdd;
       printersAdded.forEach((p) => {
         UI.createAlert(
-          "success",
+          'success',
           `Printer: ${p.printerURL} has successfully been added to the farm...`,
           500,
-          "Clicked"
+          'Clicked'
         );
       });
       event.parentElement.parentElement.parentElement.remove();
-      saveButton.innerHTML = "<i class=\"fas fa-save\"></i>";
+      saveButton.innerHTML = '<i class="fas fa-save"></i>';
       saveButton.disabled = false;
     }
-    const table = document.getElementById("printerNewTable");
+    const table = document.getElementById('printerNewTable');
     if (table.rows.length === 1) {
-      if (!table.classList.contains("d-none")) {
-        table.classList.add("d-none");
+      if (!table.classList.contains('d-none')) {
+        table.classList.add('d-none');
       }
     }
   }

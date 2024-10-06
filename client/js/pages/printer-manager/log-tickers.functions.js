@@ -8,13 +8,13 @@ export function clearConnectionLoader(loader, messageBox, count) {
   if (loader) {
     loader.remove();
     if (count === 0) {
-      messageBox.innerText = "No logs received ❌";
+      messageBox.innerText = 'No logs received ❌';
     } else {
-      if (messageBox.innerText.includes("No logs")) {
-        messageBox.innerText = "";
+      if (messageBox.innerText.includes('No logs')) {
+        messageBox.innerText = '';
       }
-      if (messageBox.classList.contains("d-flex")) {
-        messageBox.classList.remove("d-flex");
+      if (messageBox.classList.contains('d-flex')) {
+        messageBox.classList.remove('d-flex');
       }
     }
   }
@@ -42,22 +42,17 @@ export function updateActionLog(list, messageBox, countElement, loaderElement) {
   updateStatus(countElement, list.length);
   list.forEach((e) => {
     if (checkIfElementExistsInTicker(e.id)) {
-      messageBox.insertAdjacentHTML("afterbegin", createActionsLogString(e));
+      messageBox.insertAdjacentHTML('afterbegin', createActionsLogString(e));
     }
   });
 }
 
-export function updateConnectionLog(
-  list,
-  messageBox,
-  countElement,
-  loaderElement
-) {
+export function updateConnectionLog(list, messageBox, countElement, loaderElement) {
   clearConnectionLoader(loaderElement, messageBox, list.length);
   updateStatus(countElement, list.length);
   list.forEach((e) => {
     if (checkIfElementExistsInTicker(e.id)) {
-      messageBox.insertAdjacentHTML("afterbegin", createConnectionLogString(e));
+      messageBox.insertAdjacentHTML('afterbegin', createConnectionLogString(e));
     }
   });
 }
@@ -72,7 +67,7 @@ export function updateLogLine(id, messageBox, string) {
     currentAlerts.push(id);
   }
   if (checkIfElementExistsInTicker(id)) {
-    messageBox.insertAdjacentHTML("afterbegin", string);
+    messageBox.insertAdjacentHTML('afterbegin', string);
   }
 }
 
@@ -85,11 +80,9 @@ export function createActionsLogString(data) {
   const date = new Date(data.date).toLocaleString();
   return `<div title="See printer logs for more information!" id="${
     data.id
-  }" style="width: 100%; font-size:11px;" class="text-left ${
-    data.state
-  } text-wrap text${data?.status}"> ${date} | ${
-    data.currentUser
-  } | ${data.printerName.slice(0, 6)}... | ${data.action}</div>`;
+  }" style="width: 100%; font-size:11px;" class="text-left ${data.state} text-wrap text${
+    data?.status
+  }"> ${date} | ${data.currentUser} | ${data.printerName.slice(0, 6)}... | ${data.action}</div>`;
 }
 
 export function createAlertsLogString(data) {

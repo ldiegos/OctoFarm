@@ -1,19 +1,19 @@
-import Calc from "../../../utils/calc.js";
-import UI from "../../../utils/ui.js";
-import FileManagerService from "../../../services/file-manager.service.js";
-import FileManagerSortingService from "../../../services/file-manager-sorting.service.js";
-import { setupClientSwitchDropDown } from "../../../services/modal-printer-select.service";
-import { allowedFileTypes } from "../../../constants/file-types.constants";
-import "../../../utils/cleanup-modals.util";
+import Calc from '../../../utils/calc.js';
+import UI from '../../../utils/ui.js';
+import FileManagerService from '../../../services/file-manager.service.js';
+import FileManagerSortingService from '../../../services/file-manager-sorting.service.js';
+import { setupClientSwitchDropDown } from '../../../services/modal-printer-select.service';
+import { allowedFileTypes } from '../../../constants/file-types.constants';
+import '../../../utils/cleanup-modals.util';
 import {
   setupConnectButton,
   setupConnectButtonListeners,
   updateConnectButtonState,
-} from "./connect-button.service";
-import { closePrinterManagerModalIfOffline } from "../../../utils/octofarm.utils";
-import { ClientErrors } from "../../../exceptions/octofarm-client.exceptions";
-import { ApplicationError } from "../../../exceptions/application-error.handler";
-import {setupModalSwitcher} from "./modal-switcher.service";
+} from './connect-button.service';
+import { closePrinterManagerModalIfOffline } from '../../../utils/octofarm.utils';
+import { ClientErrors } from '../../../exceptions/octofarm-client.exceptions';
+import { ApplicationError } from '../../../exceptions/application-error.handler';
+import { setupModalSwitcher } from './modal-switcher.service';
 
 let currentIndex = 0;
 let currentPrinter = null;
@@ -21,7 +21,7 @@ let currentPrinter = null;
 export default class PrinterFileManagerService {
   static async init(index, printers, printerControlList) {
     //clear camera
-    if (index !== "") {
+    if (index !== '') {
       currentIndex = index;
       const id = _.findIndex(printers, function (o) {
         return o._id === index;
@@ -32,12 +32,7 @@ export default class PrinterFileManagerService {
         PrinterFileManagerService.init(value, printers, printerControlList);
       };
 
-      setupClientSwitchDropDown(
-        currentPrinter._id,
-        printerControlList,
-        changeFunction,
-        true
-      );
+      setupClientSwitchDropDown(currentPrinter._id, printerControlList, changeFunction, true);
 
       await PrinterFileManagerService.loadPrinter(currentPrinter);
       const elements = PrinterFileManagerService.grabPage();
@@ -50,7 +45,7 @@ export default class PrinterFileManagerService {
       currentPrinter = printers[id];
       const elements = PrinterFileManagerService.grabPage();
       await PrinterFileManagerService.applyState(currentPrinter, elements);
-      document.getElementById("printerManagerModal").style.overflow = "auto";
+      document.getElementById('printerManagerModal').style.overflow = 'auto';
     }
     return true;
   }
@@ -60,7 +55,7 @@ export default class PrinterFileManagerService {
     try {
       setupConnectButton(printer);
       //Load tools
-      document.getElementById("printerControls").innerHTML = `
+      document.getElementById('printerControls').innerHTML = `
           <div class="row bg-secondary rounded-top">
                 <div class="col-12">
                      <h5 class="float-left  mb-0">
@@ -155,15 +150,15 @@ export default class PrinterFileManagerService {
 
           </div>
             `;
-      setupModalSwitcher("file", printer);
+      setupModalSwitcher('file', printer);
       await FileManagerSortingService.loadSort(printer._id);
     } catch (e) {
       UI.createAlert(
-        "error",
-        "Something has gone wrong with loading the File Manager... Hard Failure, please submit as a bug on github: " +
+        'error',
+        'Something has gone wrong with loading the File Manager... Hard Failure, please submit as a bug on github: ' +
           e,
         0,
-        "clicked"
+        'clicked'
       );
       console.error(e);
       const errorObject = ClientErrors.SILENT_ERROR;
@@ -173,52 +168,39 @@ export default class PrinterFileManagerService {
   }
 
   static applyListeners(elements) {
-    const rangeSliders = document.querySelectorAll("input.octoRange");
+    const rangeSliders = document.querySelectorAll('input.octoRange');
     rangeSliders.forEach((slider) => {
-      slider.addEventListener("input", (e) => {
+      slider.addEventListener('input', (e) => {
         e.target.previousSibling.previousSibling.lastChild.innerHTML = `${e.target.value}%`;
       });
     });
 
-    setupConnectButtonListeners(
-      currentPrinter,
-      elements.connectPage.connectButton
-    );
+    setupConnectButtonListeners(currentPrinter, elements.connectPage.connectButton);
 
-    elements.fileManager.uploadFiles.addEventListener(
-      "change",
-      async function () {
-        UI.createAlert(
-          "warning",
-          "Your files for Printer: " +
-            currentPrinter.printerName +
-            " has begun. Please do not navigate away from this page.",
-          3000,
-          "Clicked"
-        );
-        await FileManagerService.handleFiles(this?.files, currentPrinter);
-      }
-    );
-    elements.fileManager.createFolderBtn.addEventListener("click", async () => {
+    elements.fileManager.uploadFiles.addEventListener('change', async function () {
+      UI.createAlert(
+        'warning',
+        'Your files for Printer: ' +
+          currentPrinter.printerName +
+          ' has begun. Please do not navigate away from this page.',
+        3000,
+        'Clicked'
+      );
+      await FileManagerService.handleFiles(this?.files, currentPrinter);
+    });
+    elements.fileManager.createFolderBtn.addEventListener('click', async () => {
       await FileManagerService.createFolder(currentPrinter);
     });
-    elements.fileManager.fileSearch.addEventListener("keyup", async () => {
+    elements.fileManager.fileSearch.addEventListener('keyup', async () => {
       await FileManagerService.search(currentPrinter._id);
     });
-    elements.fileManager.uploadPrintFile.addEventListener(
-      "change",
-      async function () {
-        await FileManagerService.handleFiles(
-          this?.files,
-          currentPrinter,
-          "print"
-        );
-      }
-    );
-    elements.fileManager.back.addEventListener("click", async () => {
+    elements.fileManager.uploadPrintFile.addEventListener('change', async function () {
+      await FileManagerService.handleFiles(this?.files, currentPrinter, 'print');
+    });
+    elements.fileManager.back.addEventListener('click', async () => {
       await FileManagerService.openFolder(undefined, undefined, currentPrinter);
     });
-    elements.fileManager.syncFiles.addEventListener("click", async (e) => {
+    elements.fileManager.syncFiles.addEventListener('click', async (e) => {
       await FileManagerService.reSyncFiles(e, currentPrinter);
     });
   }
@@ -226,32 +208,32 @@ export default class PrinterFileManagerService {
   static grabPage() {
     return {
       mainPage: {
-        title: document.getElementById("printerSelection"),
-        status: document.getElementById("pmStatus"),
+        title: document.getElementById('printerSelection'),
+        status: document.getElementById('pmStatus'),
       },
       connectPage: {
-        printerPort: document.getElementById("printerPortDrop"),
-        printerBaud: document.getElementById("printerBaudDrop"),
-        printerProfile: document.getElementById("printerProfileDrop"),
-        printerConnect: document.getElementById("printerConnect"),
-        connectButton: document.getElementById("pmConnect"),
-        portDropDown: document.getElementById("pmSerialPort"),
-        baudDropDown: document.getElementById("pmBaudrate"),
-        profileDropDown: document.getElementById("pmProfile"),
+        printerPort: document.getElementById('printerPortDrop'),
+        printerBaud: document.getElementById('printerBaudDrop'),
+        printerProfile: document.getElementById('printerProfileDrop'),
+        printerConnect: document.getElementById('printerConnect'),
+        connectButton: document.getElementById('pmConnect'),
+        portDropDown: document.getElementById('pmSerialPort'),
+        baudDropDown: document.getElementById('pmBaudrate'),
+        profileDropDown: document.getElementById('pmProfile'),
       },
       printerControls: {
-        filamentDrop: document.getElementById("filamentManagerFolderSelect"),
-        fileUpload: document.getElementById("printerManagerUploadBtn"),
+        filamentDrop: document.getElementById('filamentManagerFolderSelect'),
+        fileUpload: document.getElementById('printerManagerUploadBtn'),
       },
       fileManager: {
-        printerStorage: document.getElementById("printerStorage"),
-        fileFolderCount: document.getElementById("printerFileCount"),
-        fileSearch: document.getElementById("searchFiles"),
-        uploadFiles: document.getElementById("fileUploadBtn"),
-        uploadPrintFile: document.getElementById("fileUploadPrintBtn"),
-        syncFiles: document.getElementById("fileReSync"),
-        back: document.getElementById("fileBackBtn"),
-        createFolderBtn: document.getElementById("createFolderBtn"),
+        printerStorage: document.getElementById('printerStorage'),
+        fileFolderCount: document.getElementById('printerFileCount'),
+        fileSearch: document.getElementById('searchFiles'),
+        uploadFiles: document.getElementById('fileUploadBtn'),
+        uploadPrintFile: document.getElementById('fileUploadPrintBtn'),
+        syncFiles: document.getElementById('fileReSync'),
+        back: document.getElementById('fileBackBtn'),
+        createFolderBtn: document.getElementById('createFolderBtn'),
       },
     };
   }
@@ -259,18 +241,16 @@ export default class PrinterFileManagerService {
   static async applyState(printer, elements) {
     closePrinterManagerModalIfOffline(printer);
     //Garbage collection for terminal
-    if (typeof printer.fileList !== "undefined") {
+    if (typeof printer.fileList !== 'undefined') {
       elements.fileManager.fileFolderCount.innerHTML = `<i class="fas fa-file"></i> ${printer.fileList.filecount} <i class="fas fa-folder"></i> ${printer.fileList.folderCount}`;
     }
 
-    if (typeof printer.storage !== "undefined") {
+    if (typeof printer.storage !== 'undefined') {
       elements.fileManager.printerStorage.innerHTML = `${Calc.bytes(
         printer.storage.free
       )} / ${Calc.bytes(printer.storage.total)}`;
     } else {
-      elements.fileManager.printerStorage.innerHTML = `${Calc.bytes(
-        0
-      )} / ${Calc.bytes(0)}`;
+      elements.fileManager.printerStorage.innerHTML = `${Calc.bytes(0)} / ${Calc.bytes(0)}`;
     }
 
     updateConnectButtonState(

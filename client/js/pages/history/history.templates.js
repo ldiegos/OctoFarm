@@ -12,12 +12,13 @@ const drawActiveUser = (record) => {
 };
 
 export const returnHistoryTableRow = function (record) {
+  let galleryButton = '';
 
-  let galleryButton = ""
-
-
-
-  if(record?.snapshot?.length > 0 || record?.timelapse?.length > 0 || record?.thumbnail?.length > 0){
+  if (
+    record?.snapshot?.length > 0 ||
+    record?.timelapse?.length > 0 ||
+    record?.thumbnail?.length > 0
+  ) {
     galleryButton = `
               <button
                       type="button"
@@ -28,7 +29,7 @@ export const returnHistoryTableRow = function (record) {
               >
                 <i class="fa-regular fa-images"></i>
               </button>
-    `
+    `;
   }
 
   const spoolType = [];

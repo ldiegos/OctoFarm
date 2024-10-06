@@ -1,22 +1,18 @@
-import OctoFarmClient from "../../services/octofarm-client.service";
-import UI from "../../utils/ui";
-import {
-  reRenderPageInformation,
-  printErrors,
-  getSelectValues,
-} from "./filament-manager-ui.utils";
+import OctoFarmClient from '../../services/octofarm-client.service';
+import UI from '../../utils/ui';
+import { reRenderPageInformation, printErrors, getSelectValues } from './filament-manager-ui.utils';
 
 export async function selectFilament(spools, id) {
   let printerIds = [];
   for (const spool of spools) {
-    const meta = spool.split("-");
+    const meta = spool.split('-');
 
     printerIds.push({
       printer: meta[0],
       tool: meta[1],
     });
   }
-  await OctoFarmClient.post("/filament/assign", {
+  await OctoFarmClient.post('/filament/assign', {
     printers: printerIds,
     spoolId: id,
   });
@@ -24,34 +20,34 @@ export async function selectFilament(spools, id) {
 
 export const editProfile = async (e) => {
   const row = e.parentElement.parentElement;
-  const editable = row.querySelectorAll("input");
+  const editable = row.querySelectorAll('input');
   const id = e.parentElement.parentElement.firstElementChild.innerHTML.trim();
   editable.forEach((edit) => {
     edit.disabled = false;
     edit.value = edit.placeholder;
   });
-  document.getElementById(`save-${id}`).classList.remove("d-none");
-  document.getElementById(`edit-${id}`).classList.add("d-none");
+  document.getElementById(`save-${id}`).classList.remove('d-none');
+  document.getElementById(`edit-${id}`).classList.add('d-none');
 };
 export const saveProfile = async (e) => {
   const row = e.parentElement.parentElement;
-  const editable = row.querySelectorAll("input");
+  const editable = row.querySelectorAll('input');
   const id = e.parentElement.parentElement.firstElementChild.innerHTML.trim();
   const profile = [];
   editable.forEach((edit) => {
     edit.disabled = true;
     edit.placeholder = edit.value;
     profile.push(edit.value);
-    edit.value = "";
+    edit.value = '';
   });
   const data = {
     id,
     profile,
   };
-  let post = await OctoFarmClient.post("filament/edit/profile", data);
+  let post = await OctoFarmClient.post('filament/edit/profile', data);
   if (post && post.errors.length === 0) {
-    document.getElementById(`save-${id}`).classList.add("d-none");
-    document.getElementById(`edit-${id}`).classList.remove("d-none");
+    document.getElementById(`save-${id}`).classList.add('d-none');
+    document.getElementById(`edit-${id}`).classList.remove('d-none');
 
     await reRenderPageInformation();
   } else {
@@ -59,13 +55,13 @@ export const saveProfile = async (e) => {
   }
 };
 export const deleteProfile = async (e) => {
-  document.getElementById("profilesMessage").innerHTML = "";
-  if (e.classList.contains("delete") || e.classList.contains("deleteIcon")) {
-    let post = await OctoFarmClient.post("filament/delete/profile", {
+  document.getElementById('profilesMessage').innerHTML = '';
+  if (e.classList.contains('delete') || e.classList.contains('deleteIcon')) {
+    let post = await OctoFarmClient.post('filament/delete/profile', {
       id: e.parentElement.parentElement.firstElementChild.innerHTML.trim(),
     });
     if (post && post.errors.length === 0) {
-      if (e.classList.contains("deleteIcon")) {
+      if (e.classList.contains('deleteIcon')) {
         jplist.resetContent(function () {
           // remove element with id = el1
           e.parentElement.parentElement.parentElement.remove();
@@ -76,12 +72,7 @@ export const deleteProfile = async (e) => {
           e.parentElement.parentElement.remove();
         });
       }
-      UI.createAlert(
-        "success",
-        "Successfully deleted your profile!",
-        3000,
-        "Clicked"
-      );
+      UI.createAlert('success', 'Successfully deleted your profile!', 3000, 'Clicked');
     } else {
       printErrors(post.errors);
     }
@@ -100,25 +91,25 @@ export const addSpool = async (
 ) => {
   const errors = [];
 
-  if (spoolsName.value === "") {
-    errors.push({ type: "warning", msg: "Please input a spool name" });
+  if (spoolsName.value === '') {
+    errors.push({ type: 'warning', msg: 'Please input a spool name' });
   }
-  if (spoolsProfile.value === "") {
-    errors.push({ type: "warning", msg: "Please select a profile" });
+  if (spoolsProfile.value === '') {
+    errors.push({ type: 'warning', msg: 'Please select a profile' });
   }
-  if (spoolsPrice.value === "") {
-    errors.push({ type: "warning", msg: "Please input a spool price" });
+  if (spoolsPrice.value === '') {
+    errors.push({ type: 'warning', msg: 'Please input a spool price' });
   }
-  if (spoolsWeight.value === 0 || spoolsWeight.value === "") {
-    errors.push({ type: "warning", msg: "Please input a spool weight" });
+  if (spoolsWeight.value === 0 || spoolsWeight.value === '') {
+    errors.push({ type: 'warning', msg: 'Please input a spool weight' });
   }
-  if (spoolsUsed.value === "") {
-    errors.push({ type: "warning", msg: "Please input spool used weight" });
+  if (spoolsUsed.value === '') {
+    errors.push({ type: 'warning', msg: 'Please input spool used weight' });
   }
 
   if (errors.length > 0) {
     errors.forEach((error) => {
-      UI.createMessage(error, "addSpoolsMessage");
+      UI.createMessage(error, 'addSpoolsMessage');
     });
     return;
   }
@@ -131,19 +122,19 @@ export const addSpool = async (
     spoolsTempOffset: spoolsTempOffset.value,
     spoolsBedOffset: spoolsBedOffset.value,
   };
-  let post = await OctoFarmClient.post("filament/save/filament", opts);
+  let post = await OctoFarmClient.post('filament/save/filament', opts);
 
   if (post || post?.errors?.length === 0) {
     UI.createMessage(
       {
-        type: "success",
-        msg: "Successfully added new roll to the database...",
+        type: 'success',
+        msg: 'Successfully added new roll to the database...',
       },
-      "addSpoolsMessage"
+      'addSpoolsMessage'
     );
 
-    spoolsName.value = "";
-    spoolsPrice.value = "";
+    spoolsName.value = '';
+    spoolsPrice.value = '';
     spoolsWeight.value = 1000;
     spoolsUsed.value = 0;
     spoolsTempOffset.value = 0.0;
@@ -159,21 +150,21 @@ export const addSpool = async (
 export const addProfile = async (manufacturer, material, density, diameter) => {
   const errors = [];
 
-  if (manufacturer.value === "") {
-    errors.push({ type: "warning", msg: "Please input manufacturer" });
+  if (manufacturer.value === '') {
+    errors.push({ type: 'warning', msg: 'Please input manufacturer' });
   }
-  if (material.value === "") {
-    errors.push({ type: "warning", msg: "Please select or type a material" });
+  if (material.value === '') {
+    errors.push({ type: 'warning', msg: 'Please select or type a material' });
   }
   if (density.value === 0) {
-    errors.push({ type: "warning", msg: "Please input a density" });
+    errors.push({ type: 'warning', msg: 'Please input a density' });
   }
   if (diameter.value === 0) {
-    errors.push({ type: "warning", msg: "Please input a density" });
+    errors.push({ type: 'warning', msg: 'Please input a density' });
   }
   if (errors.length > 0) {
     errors.forEach((error) => {
-      UI.createMessage(error, "profilesMessage");
+      UI.createMessage(error, 'profilesMessage');
     });
     return;
   }
@@ -183,17 +174,17 @@ export const addProfile = async (manufacturer, material, density, diameter) => {
     density: density.value,
     diameter: diameter.value,
   };
-  let post = await OctoFarmClient.post("filament/save/profile", opts);
+  let post = await OctoFarmClient.post('filament/save/profile', opts);
   if (post && post?.errors.length === 0) {
     UI.createMessage(
       {
-        type: "success",
-        msg: "Successfully added new profile to the database...",
+        type: 'success',
+        msg: 'Successfully added new profile to the database...',
       },
-      "profilesMessage"
+      'profilesMessage'
     );
-    manufacturer.value = "";
-    material.value = "";
+    manufacturer.value = '';
+    material.value = '';
     density.value = 1.25;
     diameter.value = 1.75;
     await reRenderPageInformation();
@@ -203,9 +194,9 @@ export const addProfile = async (manufacturer, material, density, diameter) => {
 };
 
 export const editSpool = async (e) => {
-  UI.captureScrollPosition(document.getElementById("addSpoolModalBody"));
+  UI.captureScrollPosition(document.getElementById('addSpoolModalBody'));
   const row = e.parentElement.parentElement;
-  const editable = row.querySelectorAll("input");
+  const editable = row.querySelectorAll('input');
   const id = e.parentElement.parentElement.firstElementChild.innerHTML.trim();
   editable.forEach((edit) => {
     edit.disabled = false;
@@ -213,17 +204,17 @@ export const editSpool = async (e) => {
   });
   document.getElementById(`spoolsPrinterAssignment-${id}`).disabled = false;
   document.getElementById(`spoolsProfile-${id}`).disabled = false;
-  document.getElementById(`save-${id}`).classList.remove("d-none");
-  document.getElementById(`edit-${id}`).classList.add("d-none");
+  document.getElementById(`save-${id}`).classList.remove('d-none');
+  document.getElementById(`edit-${id}`).classList.add('d-none');
 };
 export const deleteSpool = async (e) => {
-  document.getElementById("profilesMessage").innerHTML = "";
-  if (e.classList.contains("delete") || e.classList.contains("deleteIcon")) {
-    let post = await OctoFarmClient.post("filament/delete/filament", {
+  document.getElementById('profilesMessage').innerHTML = '';
+  if (e.classList.contains('delete') || e.classList.contains('deleteIcon')) {
+    let post = await OctoFarmClient.post('filament/delete/filament', {
       id: e.parentElement.parentElement.firstElementChild.innerHTML.trim(),
     });
     if (post && post.errors.length === 0) {
-      if (e.classList.contains("deleteIcon")) {
+      if (e.classList.contains('deleteIcon')) {
         jplist.resetContent(function () {
           // remove element with id = el1
           e.parentElement.parentElement.parentElement.remove();
@@ -241,14 +232,14 @@ export const deleteSpool = async (e) => {
 };
 export const saveSpool = async (e) => {
   const row = e.parentElement.parentElement;
-  const editable = row.querySelectorAll("input");
+  const editable = row.querySelectorAll('input');
   const id = e.parentElement.parentElement.firstElementChild.innerHTML.trim();
   const spool = [];
   editable.forEach((edit) => {
     edit.disabled = true;
     edit.placeholder = edit.value;
     spool.push(edit.value);
-    edit.value = "";
+    edit.value = '';
   });
 
   spool.push(document.getElementById(`spoolsProfile-${id}`).value);
@@ -256,12 +247,12 @@ export const saveSpool = async (e) => {
     id,
     spool,
   };
-  let post = await OctoFarmClient.post("filament/edit/filament", data);
+  let post = await OctoFarmClient.post('filament/edit/filament', data);
   if (post && post.errors.length === 0) {
     document.getElementById(`spoolsPrinterAssignment-${id}`).disabled = true;
     document.getElementById(`spoolsProfile-${id}`).disabled = true;
-    document.getElementById(`save-${id}`).classList.add("d-none");
-    document.getElementById(`edit-${id}`).classList.remove("d-none");
+    document.getElementById(`save-${id}`).classList.add('d-none');
+    document.getElementById(`edit-${id}`).classList.remove('d-none');
 
     await selectFilament(
       getSelectValues(document.getElementById(`spoolsPrinterAssignment-${id}`)),
@@ -276,6 +267,6 @@ export const saveSpool = async (e) => {
 
 export const unAssignSpool = async (e) => {
   const id = e.parentElement.parentElement.firstElementChild.innerHTML.trim();
-  await selectFilament(["0"], id);
+  await selectFilament(['0'], id);
   await reRenderPageInformation();
 };
