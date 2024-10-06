@@ -115,6 +115,7 @@ router.post('/delete/filament', ensureAuthenticated, async (req, res) => {
       return res.send({ errors });
     });
 });
+
 router.post('/edit/filament', ensureAuthenticated, async (req, res) => {
   const searchId = req.bodyString('id');
   const errors = [];
@@ -124,13 +125,13 @@ router.post('/edit/filament', ensureAuthenticated, async (req, res) => {
   logger.info('New details: ', req.body.spool);
 
   oldSpoolData.spools.name = newContent[0];
-  oldSpoolData.spools.profile = newContent[6];
   oldSpoolData.spools.price = parseFloat(newContent[1]);
   oldSpoolData.spools.weight = parseFloat(newContent[2]);
   oldSpoolData.spools.used = parseFloat(newContent[3]);
   oldSpoolData.spools.tempOffset = parseInt(newContent[4]);
   oldSpoolData.spools.bedOffset = parseInt(newContent[5]);
-  oldSpoolData.spools.seller = parseInt(newContent[6]);
+  oldSpoolData.spools.seller = newContent[6];  
+  oldSpoolData.spools.profile = newContent[7];  
 
   oldSpoolData.markModified('spools');
 
