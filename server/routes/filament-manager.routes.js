@@ -71,6 +71,7 @@ router.post('/save/filament', ensureAuthenticated, async (req, res) => {
     used: parseFloat(filament.spoolsUsed),
     tempOffset: parseInt(filament.spoolsTempOffset),
     bedOffset: parseInt(filament.spoolsBedOffset),
+    seller: filament.spoolsSeller,
     fmID: null,
   };
   if (errors.length === 0) {
@@ -129,6 +130,7 @@ router.post('/edit/filament', ensureAuthenticated, async (req, res) => {
   oldSpoolData.spools.used = parseFloat(newContent[3]);
   oldSpoolData.spools.tempOffset = parseInt(newContent[4]);
   oldSpoolData.spools.bedOffset = parseInt(newContent[5]);
+  oldSpoolData.spools.seller = parseInt(newContent[6]);
 
   oldSpoolData.markModified('spools');
 

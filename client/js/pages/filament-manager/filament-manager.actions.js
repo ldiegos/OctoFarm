@@ -87,7 +87,8 @@ export const addSpool = async (
   spoolsWeight,
   spoolsUsed,
   spoolsTempOffset,
-  spoolsBedOffset
+  spoolsBedOffset,
+  spoolsSeller
 ) => {
   const errors = [];
 
@@ -121,6 +122,7 @@ export const addSpool = async (
     spoolsUsed: spoolsUsed.value,
     spoolsTempOffset: spoolsTempOffset.value,
     spoolsBedOffset: spoolsBedOffset.value,
+    spoolsSeller: spoolsSeller.value,
   };
   let post = await OctoFarmClient.post('filament/save/filament', opts);
 
@@ -139,6 +141,7 @@ export const addSpool = async (
     spoolsUsed.value = 0;
     spoolsTempOffset.value = 0.0;
     spoolsBedOffset.value = 0;
+    spoolsSeller.value = '';
     await reRenderPageInformation();
     return true;
   } else {

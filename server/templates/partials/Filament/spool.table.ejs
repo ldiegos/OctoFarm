@@ -36,6 +36,7 @@
         <td><%=(spool.weight - spool.used).toFixed(0)%>g</td>
         <td><%= spool.tempOffset %></td>
         <td><%= spool.bedOffset || 0 %></td>
+        <td><%= spool.seller %></td>
         <td id="spoolsListPrinterAssignment-<%=spool._id%>"></td>
     </tr>
     <% } %>

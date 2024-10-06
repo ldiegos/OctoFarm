@@ -63,6 +63,7 @@ export const cloneSpool = async (e) => {
                 <td><input id="clonedUsed-${spoolClonedId}-${nextSpoolIndex}" class="form-control" type="text" placeholder="0" value="0"></td>
                 <td><input id="clonedToolOffset-${spoolClonedId}-${nextSpoolIndex}" class="form-control" type="text" placeholder="${spool[4]}" value="${spool[4]}"></td>
                 <td><input id="clonedBedOffset-${spoolClonedId}-${nextSpoolIndex}" class="form-control" type="text" placeholder="${spool[5]}" value="${spool[5]}"></td>
+                <td><input id="clonedSeller-${spoolClonedId}-${nextSpoolIndex}" class="form-control" type="text" placeholder="${spool[6]}" value="${spool[6]}"></td>
                  <td>
                      <select id="spoolsPrinterAssignment-${spoolClonedId}-${nextSpoolIndex}" class="form-control" disabled>
 
@@ -99,7 +100,8 @@ export const cloneSpool = async (e) => {
         document.getElementById(`clonedWeight-${spoolClonedId}-${nextSpoolIndex}`),
         document.getElementById(`clonedUsed-${spoolClonedId}-${nextSpoolIndex}`),
         document.getElementById(`clonedToolOffset-${spoolClonedId}-${nextSpoolIndex}`),
-        document.getElementById(`clonedBedOffset-${spoolClonedId}-${nextSpoolIndex}`)
+        document.getElementById(`clonedBedOffset-${spoolClonedId}-${nextSpoolIndex}`),
+        document.getElementById(`clonedSeller-${spoolClonedId}-${nextSpoolIndex}`)
       );
       if (addedSpool) {
         // Remove Row

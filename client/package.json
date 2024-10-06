@@ -30,7 +30,7 @@
     "@babel/core": "^7.19.3",
     "@babel/preset-env": "^7.19.3",
     "apexcharts": "^3.35.5",
-    "axios": "^0.27.2",
+    "axios": "^1.7.7",
     "babel-loader": "^8.2.5",
     "before-build-webpack": "^0.2.12",
     "bootbox": "^5.5.2",

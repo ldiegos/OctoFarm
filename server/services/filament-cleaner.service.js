@@ -69,6 +69,7 @@ class FilamentCleanerService {
         percent: 100 - (sp.spools.used / sp.spools.weight) * 100,
         tempOffset: sp.spools.tempOffset,
         bedOffset: sp.spools.bedOffset,
+        seller: sp.spools.seller,
         printerAssignment: FilamentCleanerService.getPrinterAssignment(sp._id, farmPrinters),
         fmID: sp.spools.fmID,
       };

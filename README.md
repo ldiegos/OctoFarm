@@ -32,14 +32,17 @@
   </p>
 </div>
 
-- [About OctoFarm](#about-octofarm)
-- [Need help?](#need-help)
-- [Getting Started](#getting-started)
-- [Installation Production](#installation-production)
-- [Installation Development](#installation-development)
-- [License](#license)
-- [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
+- [OctoFarm ](#octofarm-)
+  - [About OctoFarm](#about-octofarm)
+  - [Need help?](#need-help)
+  - [Getting Started](#getting-started)
+  - [Installation Production](#installation-production)
+  - [Installation Development](#installation-development)
+    - [Requirements](#requirements)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Contact](#contact)
+  - [Acknowledgements](#acknowledgements)
 
 ## About OctoFarm
 
@@ -126,7 +129,7 @@ npm run dev-client
 7. Start the server
 
 ```sh
-npm run server-dev
+npm run dev-server
 ```
 - The developer version uses nodemon for live server reloading on changes. It will output all the logs to the console.
 

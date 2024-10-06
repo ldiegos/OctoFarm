@@ -41,6 +41,9 @@ export const spoolsManagerTableRow = (spool, allowMultiSelectIsEnabled) => {
         <td><input class="form-control" type="number" step="any" placeholder="${
           spool.bedOffset || 0
         }" disabled></td>
+        <td><input class="form-control" type="txt" placeholder="${
+          spool.seller
+        }" disabled></td>        
         <td>
 
             <select id="spoolsPrinterAssignment-${spool._id}" class="form-control" ${multiple}>

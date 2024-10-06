@@ -35,10 +35,14 @@ const SpoolSchema = new mongoose.Schema({
       type: Number,
       required: true,
     },
+    seller: {
+      type: String,
+      required: false,
+    },    
     fmID: {
       type: Number,
       required: false,
-    },
+    },    
   },
 });
 

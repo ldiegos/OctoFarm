@@ -387,6 +387,7 @@ export const setupAddSpoolsListener = () => {
     const spoolsUsed = document.getElementById('spoolsRemaining');
     const spoolsTempOffset = document.getElementById('spoolsTempOffset');
     const spoolsBedOffset = document.getElementById('spoolsBedOffset');
+    const spoolsSeller = document.getElementById('spoolsSeller');
     await addSpool(
       spoolsName,
       spoolsProfile,
@@ -394,7 +395,8 @@ export const setupAddSpoolsListener = () => {
       spoolsWeight,
       spoolsUsed,
       spoolsTempOffset,
-      spoolsBedOffset
+      spoolsBedOffset,
+      spoolsSeller
     );
   });
 };
